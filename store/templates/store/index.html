@@ -21,14 +21,14 @@
     }
 
     body.dark-mode {
-        /* DARK MODE */
-        --bg-base: #0e1428;
-        --bg-panel: #101a14;
-        --text-main: #ffffff;
-        --text-muted: #9ca3af;
-        --border-color: #1e2a23;
-        --accent-green: #10b981;
-        --accent-green-dark: #059669;
+        /* PREMIUM DARK MODE THEME */
+        --bg-base: #071510;
+        --bg-panel: #10251d;
+        --text-main: #f4efe4;
+        --text-muted: #7f988b;
+        --border-color: #1a3327;
+        --accent-green: #31c488;
+        --accent-green-dark: #159a67;
     }
 
     body {
@@ -65,7 +65,9 @@
         <button onclick="setActiveSidebar(this); closeRightPanel();" class="sidebar-btn active scale-90 md:scale-100" id="btnHome"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg></button>
         <button onclick="setActiveSidebar(this); openCartPanel();" class="sidebar-btn scale-90 md:scale-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg></button>
         <button onclick="setActiveSidebar(this); openWishlistPanel();" class="sidebar-btn scale-90 md:scale-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg></button>
-        <button onclick="setActiveSidebar(this)" class="sidebar-btn scale-90 md:scale-100"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg></button>
+
+        <button onclick="setActiveSidebar(this); openContactModal();" class="sidebar-btn scale-90 md:scale-100"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg></button>
+
         <button onclick="setActiveSidebar(this)" class="sidebar-btn scale-90 md:scale-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></button>
 
         <div class="mt-auto p-3 mb-2">
@@ -248,7 +250,10 @@
 
             <div class="space-y-6">
                 <div>
-                    <label class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-3 block lang-text" data-en="Select Volume" data-ar="اختر الحجم">Select Volume</label>
+                    <label class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-3 block">
+                        <span class="lang-text" data-en="Select Volume" data-ar="اختر الحجم">Select Volume</span>
+                        <span class="text-[8px] tracking-normal normal-case font-medium opacity-60 ms-1 lang-text" data-en="(multi-select)" data-ar="(اختيار متعدد)">(multi-select)</span>
+                    </label>
                     <div id="quickVolumePills" class="flex flex-wrap gap-2"></div>
                 </div>
                 <div>
@@ -266,6 +271,59 @@
                 <input type="hidden" id="quickDataEn">
                 <input type="hidden" id="quickDataAr">
                 <button onclick="confirmQuickAdd()" class="w-full gold-btn py-4 rounded-xl font-black uppercase tracking-widest text-[11px] mt-2 shadow-lg lang-text" data-en="Confirm & Add" data-ar="تأكيد وإضافة">Confirm & Add</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="contactModal" class="fixed inset-0 z-[200] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeContactModal()"></div>
+        <div class="bg-[var(--bg-panel)] border border-[var(--border-color)] rounded-2xl shadow-2xl w-full max-w-sm p-6 relative z-10 scale-95 origin-center animate-pop">
+            <button onclick="closeContactModal()" class="absolute top-4 end-4 w-8 h-8 flex items-center justify-center bg-[var(--bg-base)] rounded-full text-[var(--text-muted)] hover:text-red-500 transition">✕</button>
+            <h3 class="text-base font-bold text-[var(--text-main)] uppercase tracking-wide mb-6 pe-6 lang-text" data-en="Contact Us" data-ar="اتصل بنا">Contact Us</h3>
+
+            <div class="flex flex-col gap-3">
+
+                <div class="p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-base)] flex flex-col gap-3">
+                    <p class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest lang-text" data-en="Direct Call" data-ar="اتصال مباشر">Direct Call</p>
+
+                    <a href="tel:+966500825316" class="flex items-center gap-3 hover:text-[var(--accent-green)] transition group">
+                        <div class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                        </div>
+                        <span class="font-bold text-[var(--text-main)] text-sm group-hover:text-[var(--accent-green)]">+966 50 082 5316</span>
+                    </a>
+
+                    <a href="tel:+966123456789" class="flex items-center gap-3 hover:text-[var(--accent-green)] transition group">
+                        <div class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                        </div>
+                        <span class="font-bold text-[var(--text-main)] text-sm group-hover:text-[var(--accent-green)]">+966 12 345 6789</span>
+                    </a>
+                </div>
+
+                <a href="https://wa.me/966500825316" target="_blank" class="flex items-center gap-4 p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-base)] hover:border-[#25D366] transition group">
+                    <div class="w-10 h-10 rounded-lg bg-[#25D366]/10 text-[#25D366] flex items-center justify-center group-hover:bg-[#25D366] group-hover:text-white transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg>
+                    </div>
+                    <span class="font-bold text-[var(--text-main)] text-[11px] uppercase tracking-wider">WhatsApp</span>
+                </a>
+
+                <div class="flex gap-3">
+                    <a href="https://instagram.com/YOUR_INSTAGRAM_USERNAME" target="_blank" class="flex-1 flex items-center justify-center gap-2 p-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-base)] hover:border-[#E1306C] transition group">
+                        <div class="w-8 h-8 rounded-md bg-[#E1306C]/10 text-[#E1306C] flex items-center justify-center group-hover:bg-gradient-to-tr group-hover:from-[#F56040] group-hover:to-[#833AB4] group-hover:text-white transition">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </div>
+                        <span class="font-bold text-[var(--text-main)] text-[10px] uppercase tracking-wider">Insta</span>
+                    </a>
+
+                    <a href="https://snapchat.com/add/YOUR_SNAPCHAT_USERNAME" target="_blank" class="flex-1 flex items-center justify-center gap-2 p-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-base)] hover:border-[#FFFC00] transition group">
+                        <div class="w-8 h-8 rounded-md bg-[#FFFC00]/20 text-[#D4AF37] flex items-center justify-center group-hover:bg-[#FFFC00] group-hover:text-black transition">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.008 1.111c-2.583 0-4.685 2.046-4.685 4.558 0 1.088.428 2.087 1.152 2.865-.484.095-.913.256-1.309.479-.472.266-.889.605-1.214 1.018-.621.785-.898 1.83-.808 2.894l.031.365c-.657-.225-1.385-.295-2.12-.137-.534.116-1.012.355-1.393.684-.526.452-.801 1.096-.757 1.76.046.685.422 1.34 1.036 1.8.845.632 2.069.963 3.398.924.321-.009.65-.035.986-.076l.07.318c.241 1.085.836 2.05 1.71 2.766.865.708 2.003 1.135 3.238 1.189h.16c1.235-.054 2.373-.481 3.238-1.189.874-.716 1.469-1.681 1.71-2.766l.07-.318c.336.041.665.067.986.076 1.329.039 2.553-.292 3.398-.924.614-.46 .99-1.115 1.036-1.8.044-.664-.231-1.308-.757-1.76-.381-.329-.859-.568-1.393-.684-.735-.158-1.463-.088-2.12.137l.031-.365c.09-1.064-.187-2.109-.808-2.894-.325-.413-.742-.752-1.214-1.018-.396-.223-.825-.384-1.309-.479.724-.78 1.155-1.781 1.155-2.871 0-2.512-2.102-4.558-4.685-4.558zM8.332 8.711c-.64-.645-.979-1.46-.979-2.333 0-1.884 1.627-3.411 3.627-3.411 2 0 3.627 1.527 3.627 3.411 0 .873-.339 1.688-.979 2.333-.282.285-.56.583-.868.872-.326.305-.658.6-.995.891-.207.18-.539.183-.745.001-.336-.291-.669-.586-.995-.891-.308-.289-.586-.587-.868-.872z"/></svg>
+                        </div>
+                        <span class="font-bold text-[var(--text-main)] text-[10px] uppercase tracking-wider">Snap</span>
+                    </a>
+                </div>
+
             </div>
         </div>
     </div>
@@ -321,9 +379,13 @@
 
     const rightPanelInner = document.getElementById('rightPanelInner');
     const quickAddModal = document.getElementById('quickAddModal');
+    const contactModal = document.getElementById('contactModal');
     const quickQtyInput = document.getElementById('quickQty');
-    let currentSelectedVolume = "";
+
+    // CHANGED: currentSelectedVolume is now an array to hold multiple selections
+    let currentSelectedVolumes = [];
     let currentSelectedUnit = "";
+
     let shoppingCart = JSON.parse(localStorage.getItem('growGreenCart')) || [];
     let wishlist = JSON.parse(localStorage.getItem('growGreenWishlist')) || [];
     let currentLang = localStorage.getItem('lang') || 'en';
@@ -438,7 +500,7 @@
     }
 
     function openDetailPanel(nameEn, nameAr, imgUrl, volumes, units) {
-        currentSelectedVolume = "";
+        currentSelectedVolumes = []; // Reset multiple volumes
         currentSelectedUnit = "";
 
         const title = currentLang === 'en' ? nameEn : nameAr;
@@ -453,6 +515,9 @@
 
         let volHtml = volumes.length ? volumes.map(v => `<button id="dvol-${v.replace(/\s+/g,'-')}" onclick="selectDetailVolume('${v}')" class="border border-[var(--border-color)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none bg-[var(--bg-base)]">${v}</button>`).join('') : '<span class="text-xs text-[var(--text-muted)]">N/A</span>';
         let unitHtml = units.length ? units.map(u => `<button id="dunit-${u.replace(/\s+/g,'-')}" onclick="selectDetailUnit('${u}')" class="border border-[var(--border-color)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none bg-[var(--bg-base)]">${u}</button>`).join('') : '<span class="text-xs text-[var(--text-muted)]">N/A</span>';
+
+        // Add the (multi-select) text helper next to the volume label
+        const multiSelectHint = currentLang === 'en' ? '(multi-select)' : '(اختيار متعدد)';
 
         rightPanelInner.innerHTML = `
             <div class="p-6 border-b border-[var(--border-color)] flex justify-between items-center shrink-0">
@@ -469,7 +534,10 @@
 
                 <div class="mt-8 space-y-6">
                     <div>
-                        <label class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-3 block">${lblVol}</label>
+                        <label class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-3 block">
+                            <span>${lblVol}</span>
+                            <span class="text-[8px] tracking-normal normal-case font-medium opacity-60 ms-1">${multiSelectHint}</span>
+                        </label>
                         <div id="detailVolPills" class="flex flex-wrap gap-2">${volHtml}</div>
                     </div>
                     <div>
@@ -552,10 +620,20 @@
         openWishlistPanel();
     }
 
+    // MULTI-SELECT VOLUME FEATURE (DETAIL PANEL)
     function selectDetailVolume(vol) {
-        currentSelectedVolume = vol;
-        document.getElementById('detailVolPills').querySelectorAll('button').forEach(btn => btn.className = "border border-[var(--border-color)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none bg-[var(--bg-base)]");
-        document.getElementById('dvol-' + vol.replace(/\s+/g,'-')).className = "border-2 border-[var(--accent-green)] text-[var(--accent-green)] bg-[var(--accent-green)]/10 rounded-lg px-4 py-2 text-[10px] font-black uppercase transition focus:outline-none";
+        const btn = document.getElementById('dvol-' + vol.replace(/\s+/g,'-'));
+        const idx = currentSelectedVolumes.indexOf(vol);
+
+        if (idx > -1) {
+            // Remove it
+            currentSelectedVolumes.splice(idx, 1);
+            btn.className = "border border-[var(--border-color)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none bg-[var(--bg-base)]";
+        } else {
+            // Add it
+            currentSelectedVolumes.push(vol);
+            btn.className = "border-2 border-[var(--accent-green)] text-[var(--accent-green)] bg-[var(--accent-green)]/10 rounded-lg px-4 py-2 text-[10px] font-black uppercase transition focus:outline-none";
+        }
     }
 
     function selectDetailUnit(unit) {
@@ -575,11 +653,16 @@
         let nameEn = document.getElementById('pDataEn').value;
         let nameAr = document.getElementById('pDataAr').value;
 
-        if (currentSelectedVolume === "" || currentSelectedUnit === "") {
-            alert(currentLang === 'en' ? "Please select both a Volume and a Unit." : "الرجاء اختيار الحجم والوحدة.");
+        if (currentSelectedVolumes.length === 0 || currentSelectedUnit === "") {
+            alert(currentLang === 'en' ? "Please select at least one Volume and a Unit." : "الرجاء اختيار الحجم والوحدة.");
             return;
         }
-        processCartAdd(nameEn, nameAr, currentSelectedVolume, currentSelectedUnit, qty);
+
+        // Loop through all selected volumes and add them to cart
+        currentSelectedVolumes.forEach(vol => {
+            processCartAdd(nameEn, nameAr, vol, currentSelectedUnit, qty);
+        });
+
         closeRightPanel();
     }
 
@@ -626,8 +709,21 @@
         openPanel();
     }
 
+    // --- NEW CONTACT MODAL FUNCTIONS ---
+    function openContactModal() {
+        contactModal.classList.remove('hidden');
+    }
+
+    function closeContactModal() {
+        contactModal.classList.add('hidden');
+        // Reset sidebar button active state back to Home
+        const homeBtn = document.getElementById('btnHome');
+        if (homeBtn) setActiveSidebar(homeBtn);
+    }
+    // -----------------------------------
+
     function openQuickAddModal(nameEn, nameAr, volumes, units) {
-        currentSelectedVolume = "";
+        currentSelectedVolumes = []; // Reset multiple volumes
         currentSelectedUnit = "";
         quickQtyInput.value = 1;
 
@@ -643,10 +739,20 @@
 
     function closeQuickAdd() { quickAddModal.classList.add('hidden'); }
 
+    // MULTI-SELECT VOLUME FEATURE (QUICK ADD MODAL)
     function selectQuickVolume(vol) {
-        currentSelectedVolume = vol;
-        document.getElementById('quickVolumePills').querySelectorAll('button').forEach(btn => btn.className = "border border-[var(--border-color)] bg-[var(--bg-base)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none");
-        document.getElementById('qvol-' + vol.replace(/\s+/g,'-')).className = "border-2 border-[var(--accent-green)] text-[var(--accent-green)] bg-[var(--accent-green)]/10 rounded-lg px-4 py-2 text-[10px] font-black uppercase transition focus:outline-none";
+        const btn = document.getElementById('qvol-' + vol.replace(/\s+/g,'-'));
+        const idx = currentSelectedVolumes.indexOf(vol);
+
+        if (idx > -1) {
+            // Remove it
+            currentSelectedVolumes.splice(idx, 1);
+            btn.className = "border border-[var(--border-color)] bg-[var(--bg-base)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none";
+        } else {
+            // Add it
+            currentSelectedVolumes.push(vol);
+            btn.className = "border-2 border-[var(--accent-green)] text-[var(--accent-green)] bg-[var(--accent-green)]/10 rounded-lg px-4 py-2 text-[10px] font-black uppercase transition focus:outline-none";
+        }
     }
 
     function selectQuickUnit(unit) {
@@ -665,12 +771,16 @@
         let nameEn = document.getElementById('quickDataEn').value;
         let nameAr = document.getElementById('quickDataAr').value;
 
-        if (currentSelectedVolume === "" || currentSelectedUnit === "") {
-            alert(currentLang === 'en' ? "Please select both a Volume and a Unit." : "الرجاء اختيار الحجم والوحدة.");
+        if (currentSelectedVolumes.length === 0 || currentSelectedUnit === "") {
+            alert(currentLang === 'en' ? "Please select at least one Volume and a Unit." : "الرجاء اختيار الحجم والوحدة.");
             return;
         }
 
-        processCartAdd(nameEn, nameAr, currentSelectedVolume, currentSelectedUnit, qty);
+        // Loop through all selected volumes and add them to cart
+        currentSelectedVolumes.forEach(vol => {
+            processCartAdd(nameEn, nameAr, vol, currentSelectedUnit, qty);
+        });
+
         closeQuickAdd();
     }
 

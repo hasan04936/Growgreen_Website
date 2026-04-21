@@ -44,7 +44,6 @@ def admin_dashboard_view(request):
     return render(request, 'store/dashboard.html', context)
 
 
-
 @staff_member_required
 def admin_excel_upload(request):
     if request.method == 'POST':
@@ -58,38 +57,59 @@ def admin_excel_upload(request):
             products_created = 0
 
             for index, row in df.iterrows():
+                # 1. Handle Category (Auto-Create if missing)
                 cat_name = str(row['Category (Exact English Name)']).strip()
-                category = Category.objects.filter(name_en__iexact=cat_name).first()
-                if not category:
-                    continue
+                if cat_name == 'nan' or not cat_name:
+                    continue  # Skip if category cell is totally empty
 
+                # get_or_create will find it, or build it if it's brand new!
+                category, created = Category.objects.get_or_create(
+                    name_en__iexact=cat_name,
+                    defaults={'name_en': cat_name, 'name_ar': cat_name}
+                )
+
+                # 2. Create Product
                 is_new = str(row['Is New Arrival (Yes/No)']).strip().lower() == 'yes'
+
+                # Check for empty names to avoid "nan"
+                name_en = str(row['Name (English)']).strip()
+                name_ar = str(row['Name (Arabic)']).strip()
+                if name_en == 'nan': name_en = "Unnamed Product"
+                if name_ar == 'nan': name_ar = "منتج غير مسمى"
+
                 product = Product.objects.create(
                     category=category,
-                    name_en=str(row['Name (English)']).strip(),
-                    name_ar=str(row['Name (Arabic)']).strip(),
+                    name_en=name_en,
+                    name_ar=name_ar,
                     is_new_arrival=is_new
                 )
 
+                # 3. Handle Volumes (Auto-Create if missing)
                 volumes_str = str(row['Volumes (Comma separated, e.g., 500ml, 1L)'])
-                if volumes_str != 'nan':
-                    vol_list = [v.strip() for v in volumes_str.split(',')]
+                if volumes_str != 'nan' and volumes_str.strip():
+                    vol_list = [v.strip() for v in volumes_str.split(',') if v.strip()]
                     for v_name in vol_list:
-                        vol_obj = Volume.objects.filter(name_en__iexact=v_name).first()
-                        if vol_obj:
-                            product.available_volumes.add(vol_obj)
+                        vol_obj, created = Volume.objects.get_or_create(
+                            name_en__iexact=v_name,
+                            defaults={'name_en': v_name, 'name_ar': v_name}
+                        )
+                        product.available_volumes.add(vol_obj)
 
+                # 4. Handle Units (Auto-Create if missing)
                 units_str = str(row['Units (Comma separated, e.g., PCS, Dozen)'])
-                if units_str != 'nan':
-                    unit_list = [u.strip() for u in units_str.split(',')]
+                if units_str != 'nan' and units_str.strip():
+                    unit_list = [u.strip() for u in units_str.split(',') if u.strip()]
                     for u_name in unit_list:
-                        unit_obj = Unit.objects.filter(name_en__iexact=u_name).first()
-                        if unit_obj:
-                            product.available_units.add(unit_obj)
+                        unit_obj, created = Unit.objects.get_or_create(
+                            name_en__iexact=u_name,
+                            defaults={'name_en': u_name, 'name_ar': u_name}
+                        )
+                        product.available_units.add(unit_obj)
+
                 products_created += 1
 
-            # Save success message and go back to dashboard
-            messages.success(request, f"Successfully imported {products_created} products!")
+            messages.success(request,
+                             f"Successfully imported {products_created} products! Any missing categories, volumes, or units were auto-generated.")
             return redirect('custom_admin_dashboard')
 
         except Exception as e:
