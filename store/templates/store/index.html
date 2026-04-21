@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grow Green | Luxury Wholesale</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+    <style>
+    :root {
+        /* LIGHT MODE - MINT THEME */
+        --bg-base: #f4f8f5;
+        --bg-panel: #ffffff;
+        --text-main: #111827;
+        --text-muted: #6b7280;
+        --border-color: #e5efe8;
+        --accent-green: #10b981;
+        --accent-green-dark: #059669;
+    }
+
+    body.dark-mode {
+        /* DARK MODE */
+        --bg-base: #0e1428;
+        --bg-panel: #101a14;
+        --text-main: #ffffff;
+        --text-muted: #9ca3af;
+        --border-color: #1e2a23;
+        --accent-green: #10b981;
+        --accent-green-dark: #059669;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--bg-base);
+        color: var(--text-main);
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    html[dir="rtl"] body { font-family: 'Cairo', sans-serif; }
+
+    /* Scrollbars */
+    .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+    .custom-scroll::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 10px; }
+    .custom-scroll:hover::-webkit-scrollbar-thumb { background-color: var(--accent-green); }
+
+    .gold-text { color: var(--accent-green); }
+    .gold-btn { background: linear-gradient(135deg, var(--accent-green), var(--accent-green-dark)); color: #ffffff; transition: all 0.3s; }
+    .gold-btn:hover { box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3); transform: translateY(-1px); }
+
+    .sidebar-btn { width: 3rem; height: 3rem; display: flex; align-items: center; justify-content: center; border-radius: 0.75rem; color: var(--text-muted); transition: all 0.3s ease; margin-bottom: 1rem; }
+    .sidebar-btn:hover { color: var(--accent-green); background: rgba(16, 185, 129, 0.05); }
+    .sidebar-btn.active { background: linear-gradient(135deg, var(--accent-green), var(--accent-green-dark)); color: #ffffff !important; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); border-radius: 1rem; }
+
+    #rightPanelInner { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    html[dir="rtl"] .en-only { display: none !important; }
+    html[dir="ltr"] .ar-only { display: none !important; }
+    </style>
+</head>
+<body class="h-screen flex overflow-hidden">
+
+    <aside class="w-16 md:w-20 bg-[var(--bg-panel)] flex flex-col items-center py-6 shrink-0 z-30 transition-colors border-e border-[var(--border-color)] shadow-[5px_0_15px_rgba(0,0,0,0.02)]">
+        <button onclick="setActiveSidebar(this); closeRightPanel();" class="sidebar-btn active scale-90 md:scale-100" id="btnHome"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg></button>
+        <button onclick="setActiveSidebar(this); openCartPanel();" class="sidebar-btn scale-90 md:scale-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg></button>
+        <button onclick="setActiveSidebar(this); openWishlistPanel();" class="sidebar-btn scale-90 md:scale-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg></button>
+        <button onclick="setActiveSidebar(this)" class="sidebar-btn scale-90 md:scale-100"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg></button>
+        <button onclick="setActiveSidebar(this)" class="sidebar-btn scale-90 md:scale-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></button>
+
+        <div class="mt-auto p-3 mb-2">
+             <label class="relative inline-flex items-center cursor-pointer scale-75 md:scale-90">
+                <input type="checkbox" onchange="toggleTheme()" id="themeToggle" class="sr-only peer">
+                <div class="w-10 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--accent-green)] shadow-inner"></div>
+            </label>
+        </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col min-w-0 overflow-hidden transition-colors">
+
+        <header class="h-16 md:h-20 px-4 md:px-8 flex items-center justify-between bg-[var(--bg-panel)] shrink-0 z-20 border-b border-[var(--border-color)] gap-3">
+            <h1 class="text-lg md:text-xl font-extrabold tracking-widest text-[var(--text-main)] uppercase shrink-0 hidden sm:block">
+                <span class="lang-text" data-en="GROW" data-ar="ننمو">GROW</span>
+                <span class="gold-text lang-text" data-en="GREEN" data-ar="أخضر">GREEN</span>
+            </h1>
+            <h1 class="text-lg font-extrabold tracking-widest text-[var(--text-main)] uppercase shrink-0 sm:hidden">
+                G<span class="gold-text">G</span>
+            </h1>
+
+            <div class="flex items-center gap-2 md:gap-6 flex-1 justify-end">
+                <div class="relative flex-1 max-w-[250px] md:max-w-none md:w-72 lg:w-96">
+                    <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search products..." class="w-full px-8 md:px-12 py-2 md:py-2.5 rounded-full border border-[var(--border-color)] bg-[var(--bg-base)] text-[var(--text-main)] text-xs md:text-sm focus:outline-none focus:border-[var(--accent-green)] transition focus:bg-[var(--bg-panel)] shadow-inner">
+                    <svg class="w-3.5 h-3.5 md:w-4 md:h-4 text-[var(--text-muted)] absolute start-3 md:start-5 top-2.5 md:top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+
+                <button onclick="toggleLanguage()" class="font-bold text-[var(--text-muted)] hover:text-[var(--accent-green)] transition text-xs md:text-sm shrink-0 uppercase tracking-widest">
+                    <span class="en-only">عربي</span><span class="ar-only">EN</span>
+                </button>
+
+                <button onclick="openCartPanel()" class="border-2 border-[var(--accent-green)] rounded-full flex items-center px-2 py-1 md:px-5 md:py-1.5 text-[var(--accent-green)] font-bold text-[10px] md:text-xs uppercase tracking-widest hover:bg-[var(--accent-green)] hover:text-white transition-all group shrink-0">
+                    <span class="me-2 hidden sm:block lang-text" data-en="CART" data-ar="السلة">CART</span>
+                    <svg class="w-3.5 h-3.5 me-1.5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    <span id="cartCount" class="bg-[var(--accent-green)] group-hover:bg-white group-hover:text-[var(--accent-green)] text-white w-5 h-5 md:w-6 md:h-6 rounded-full flex items-center justify-center shadow-sm font-black transition-colors">0</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="flex-1 flex flex-col md:flex-row overflow-hidden bg-[var(--bg-base)] relative">
+
+            <aside class="w-full md:w-40 bg-[var(--bg-panel)] overflow-x-auto md:overflow-y-auto custom-scroll py-4 md:py-8 shrink-0 z-10 border-b md:border-b-0 md:border-e border-[var(--border-color)]">
+                <div class="flex flex-row md:flex-col gap-6 px-4 min-w-max md:min-w-0">
+
+                    <div onclick="filterProducts('ALL', this)" class="category-item flex flex-col items-center group cursor-pointer shrink-0 w-20 md:w-auto">
+                        <div class="w-16 h-16 md:w-20 md:h-20 rounded-full border-[3px] border-[var(--accent-green)] p-1 mb-2 bg-[var(--bg-base)] shadow-[0_4px_15px_rgba(16,185,129,0.3)] transition-all duration-300 overflow-hidden flex items-center justify-center group-hover:scale-105">
+                            <span class="font-black text-[10px] md:text-xs gold-text lang-text tracking-widest" data-en="ALL" data-ar="الكل">ALL</span>
+                        </div>
+                        <span class="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)] group-hover:text-[var(--accent-green)] text-center lang-text transition-colors" data-en="Show All" data-ar="عرض الكل">Show All</span>
+                    </div>
+
+                    {% for category in categories %}
+                    <div onclick="filterProducts('{{ category.name_en|escapejs }}', this)" class="category-item flex flex-col items-center group cursor-pointer shrink-0 w-20 md:w-auto">
+                        <div class="w-16 h-16 md:w-20 md:h-20 rounded-full border-[3px] border-transparent group-hover:border-[var(--accent-green)] p-1 mb-2 bg-[var(--bg-base)] shadow-sm group-hover:shadow-[0_4px_15px_rgba(16,185,129,0.3)] transition-all duration-300 overflow-hidden group-hover:scale-105">
+                            {% if category.image %}
+                                <img src="{{ category.image.url }}" class="w-full h-full object-cover rounded-full">
+                            {% else %}
+                                <div class="w-full h-full bg-gray-200 rounded-full"></div>
+                            {% endif %}
+                        </div>
+                        <span class="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)] group-hover:text-[var(--accent-green)] text-center text-en en-only transition-colors">{{ category.name_en }}</span>
+                        <span class="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)] group-hover:text-[var(--accent-green)] text-center text-ar ar-only transition-colors">{{ category.name_ar }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </aside>
+
+            <main class="flex-1 overflow-y-auto custom-scroll p-4 md:p-6 lg:p-10 z-10 w-full relative">
+                <div class="max-w-[1400px] w-full mx-auto">
+
+                    <div class="w-full rounded-3xl h-[200px] md:h-[400px] relative mb-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden group bg-[var(--bg-panel)]" id="heroCarousel">
+
+                        {% for banner in banners %}
+                        <div class="carousel-slide absolute inset-0 {% if forloop.first %}opacity-100 z-10{% else %}opacity-0 z-0{% endif %} transition-opacity duration-1000">
+
+                            {% if banner.image %}
+                                <img src="{{ banner.image.url }}" class="w-full h-full object-cover">
+                            {% else %}
+                                <div class="w-full h-full bg-gray-100 flex items-center justify-center"><p class="text-gray-400 font-bold tracking-widest text-sm">NO IMAGE UPLOADED</p></div>
+                            {% endif %}
+
+                            <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black/50 to-transparent pointer-events-none"></div>
+
+                            <div class="absolute bottom-6 left-6 md:bottom-10 md:left-10 flex gap-3 z-20">
+                                <button onclick="document.getElementById('searchInput').focus()" class="gold-btn px-5 md:px-8 py-2.5 md:py-3.5 rounded-xl text-xs md:text-sm font-bold shadow-xl flex items-center gap-2">
+                                    <span class="lang-text" data-en="Start Ordering" data-ar="ابدأ الطلب">Start Ordering</span>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                </button>
+                                <button onclick="window.scrollBy({top: 600, behavior: 'smooth'})" class="bg-white/10 backdrop-blur-md border border-white/30 text-white hover:bg-white/20 px-5 md:px-8 py-2.5 md:py-3.5 rounded-xl text-xs md:text-sm font-bold shadow-xl transition hidden sm:block">
+                                    <span class="lang-text" data-en="View Products" data-ar="عرض المنتجات">View Products</span>
+                                </button>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="carousel-slide absolute inset-0 opacity-100 z-10 flex items-center justify-center bg-[var(--bg-panel)]">
+                            <p class="text-[var(--text-muted)] font-bold tracking-widest text-sm">PLEASE UPLOAD A BANNER</p>
+                        </div>
+                        {% endfor %}
+
+                        <div class="absolute bottom-6 right-6 md:bottom-10 md:right-10 flex gap-2 z-20">
+                            {% for banner in banners %}
+                                <button onclick="goToSlide({{ forloop.counter0 }})" class="indicator-dot {% if forloop.first %}w-8 bg-white{% else %}w-2 bg-white/50 hover:bg-white{% endif %} h-2 rounded-full transition-all duration-300 shadow-sm"></button>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between mb-6 border-b border-[var(--border-color)] pb-3">
+                        <h3 class="text-[13px] font-black uppercase tracking-[0.2em] text-[var(--text-main)] lang-text" data-en="Exclusive Products" data-ar="منتجات حصرية">Exclusive Products</h3>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 md:gap-6">
+                        {% for product in products %}
+                        <div class="product-card bg-[var(--bg-panel)] rounded-2xl p-4 flex flex-col relative group hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[var(--border-color)] hover:border-[var(--accent-green)]/30 transition-all duration-300" data-cat="{{ product.category.name_en|escapejs }}">
+
+                            {% if product.is_new_arrival %}
+                                <span class="absolute top-4 start-4 bg-[var(--accent-green)] text-white text-[9px] uppercase font-black px-2.5 py-1 rounded-md shadow-sm z-10 tracking-widest lang-text" data-en="NEW" data-ar="جديد">NEW</span>
+                            {% endif %}
+
+                            <div class="in-cart-tick absolute top-4 end-4 bg-[var(--accent-green)] text-white w-6 h-6 rounded-full flex items-center justify-center shadow-md z-10 transition-all duration-300 opacity-0 scale-0" data-name-en="{{ product.name_en|escapejs }}">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+
+                            <div class="h-44 md:h-48 bg-[var(--bg-base)] rounded-xl flex items-center justify-center p-3 mb-4 overflow-hidden relative">
+                                {% if product.image_1 %}
+                                    <img src="{{ product.image_1.url }}" class="max-h-full object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-sm">
+                                {% endif %}
+                                <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl"></div>
+                            </div>
+
+                            <div class="flex-grow flex flex-col justify-between">
+                                <div class="mb-2">
+                                    <p class="text-[9px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-1">{{ product.category.name_en }}</p>
+                                    <h4 class="text-xs font-bold text-[var(--text-main)] uppercase tracking-wide line-clamp-1 en-only">{{ product.name_en }}</h4>
+                                    <h4 class="text-xs font-bold text-[var(--text-main)] uppercase tracking-wide line-clamp-1 ar-only text-right">{{ product.name_ar }}</h4>
+                                </div>
+
+                                <div class="mt-3 flex gap-2">
+                                    <button onclick="openDetailPanel(
+                                        '{{ product.name_en|escapejs }}',
+                                        '{{ product.name_ar|escapejs }}',
+                                        '{% if product.image_1 %}{{ product.image_1.url }}{% endif %}',
+                                        [{% for v in product.available_volumes.all %}'{{ v.name_en|escapejs }}'{% if not forloop.last %}, {% endif %}{% endfor %}],
+                                        [{% for u in product.available_units.all %}'{{ u.name_en|escapejs }}'{% if not forloop.last %}, {% endif %}{% endfor %}]
+                                    )" class="flex-1 bg-[var(--bg-base)] hover:bg-[var(--border-color)] text-[var(--text-main)] rounded-lg py-2 flex items-center justify-center transition">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                    </button>
+
+                                    <button onclick="openQuickAddModal(
+                                        '{{ product.name_en|escapejs }}',
+                                        '{{ product.name_ar|escapejs }}',
+                                        [{% for v in product.available_volumes.all %}'{{ v.name_en|escapejs }}'{% if not forloop.last %}, {% endif %}{% endfor %}],
+                                        [{% for u in product.available_units.all %}'{{ u.name_en|escapejs }}'{% if not forloop.last %}, {% endif %}{% endfor %}]
+                                    )" class="flex-[3] gold-btn rounded-lg py-2 text-[10px] font-bold uppercase tracking-widest flex items-center justify-center gap-1">
+                                        <span class="lang-text" data-en="Add" data-ar="اضف">Add</span>
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p class="col-span-full text-center text-[var(--text-muted)] py-10 font-light text-sm lang-text" data-en="No products available." data-ar="لا توجد منتجات">No products available.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </main>
+
+            <aside class="w-0 xl:w-[400px] shrink-0 transition-all duration-0 relative overflow-visible xl:overflow-hidden border-s-0 xl:border-s border-[var(--border-color)] bg-transparent z-50 xl:z-20">
+                <div id="rightPanelInner" class="fixed xl:absolute top-0 end-0 h-full w-full max-w-[400px] sm:max-w-[400px] bg-[var(--bg-panel)] transform translate-x-full rtl:-translate-x-full transition-transform duration-500 ease-out shadow-[-10px_0_30px_rgba(0,0,0,0.05)] xl:shadow-none">
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <div id="quickAddModal" class="fixed inset-0 z-[200] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeQuickAdd()"></div>
+        <div class="bg-[var(--bg-panel)] border border-[var(--border-color)] rounded-2xl shadow-2xl w-full max-w-sm p-6 relative z-10 scale-95 origin-center animate-pop">
+            <button onclick="closeQuickAdd()" class="absolute top-4 end-4 w-8 h-8 flex items-center justify-center bg-[var(--bg-base)] rounded-full text-[var(--text-muted)] hover:text-red-500 transition">✕</button>
+            <h3 id="quickName" class="text-base font-bold text-[var(--text-main)] uppercase tracking-wide mb-6 pe-6">Product</h3>
+
+            <div class="space-y-6">
+                <div>
+                    <label class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-3 block lang-text" data-en="Select Volume" data-ar="اختر الحجم">Select Volume</label>
+                    <div id="quickVolumePills" class="flex flex-wrap gap-2"></div>
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-3 block lang-text" data-en="Select Unit" data-ar="اختر الوحدة">Select Unit</label>
+                    <div id="quickUnitPills" class="flex flex-wrap gap-2"></div>
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-3 block lang-text" data-en="Quantity" data-ar="الكمية">Quantity</label>
+                    <div class="flex items-center border border-[var(--border-color)] rounded-lg w-full overflow-hidden bg-[var(--bg-base)] h-12">
+                        <button onclick="changeQuickQty(-1)" class="flex-1 text-[var(--text-muted)] hover:text-[var(--accent-green)] font-bold text-lg">-</button>
+                        <input type="number" id="quickQty" value="1" min="1" class="w-16 text-center font-bold bg-white text-[var(--text-main)] h-full border-x border-[var(--border-color)] outline-none appearance-none">
+                        <button onclick="changeQuickQty(1)" class="flex-1 text-[var(--text-muted)] hover:text-[var(--accent-green)] font-bold text-lg">+</button>
+                    </div>
+                </div>
+                <input type="hidden" id="quickDataEn">
+                <input type="hidden" id="quickDataAr">
+                <button onclick="confirmQuickAdd()" class="w-full gold-btn py-4 rounded-xl font-black uppercase tracking-widest text-[11px] mt-2 shadow-lg lang-text" data-en="Confirm & Add" data-ar="تأكيد وإضافة">Confirm & Add</button>
+            </div>
+        </div>
+    </div>
+
+<style>
+    @keyframes pop { 0% { transform: scale(0.95); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    .animate-pop { animation: pop 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+</style>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.indicator-dot');
+    let slideInterval;
+
+    function showSlide(index) {
+        if (!slides.length) return;
+        slides.forEach((slide, i) => {
+            slide.classList.remove('opacity-100', 'z-10');
+            slide.classList.add('opacity-0', 'z-0');
+            if(dots[i]) {
+                dots[i].classList.remove('bg-white', 'w-8');
+                dots[i].classList.add('bg-white/50', 'w-2');
+            }
+        });
+        slides[index].classList.remove('opacity-0', 'z-0');
+        slides[index].classList.add('opacity-100', 'z-10');
+        if(dots[index]) {
+            dots[index].classList.remove('bg-white/50', 'w-2');
+            dots[index].classList.add('bg-white', 'w-8');
+        }
+        currentSlide = index;
+    }
+
+    function nextSlide() {
+        if (!slides.length) return;
+        let next = (currentSlide + 1) % slides.length;
+        showSlide(next);
+    }
+
+    function goToSlide(index) {
+        showSlide(index);
+        clearInterval(slideInterval);
+        slideInterval = setInterval(nextSlide, 5000);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (slides.length > 0) {
+            showSlide(0);
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+    });
+
+    const rightPanelInner = document.getElementById('rightPanelInner');
+    const quickAddModal = document.getElementById('quickAddModal');
+    const quickQtyInput = document.getElementById('quickQty');
+    let currentSelectedVolume = "";
+    let currentSelectedUnit = "";
+    let shoppingCart = JSON.parse(localStorage.getItem('growGreenCart')) || [];
+    let wishlist = JSON.parse(localStorage.getItem('growGreenWishlist')) || [];
+    let currentLang = localStorage.getItem('lang') || 'en';
+
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('themeToggle').checked = true;
+    }
+
+    applyLanguage();
+    updateCartDisplay();
+
+    function toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+    }
+
+    function toggleLanguage() {
+        currentLang = currentLang === 'en' ? 'ar' : 'en';
+        localStorage.setItem('lang', currentLang);
+        applyLanguage();
+    }
+
+    function applyLanguage() {
+        const htmlRoot = document.getElementById('html-root');
+        htmlRoot.setAttribute('dir', currentLang === 'en' ? 'ltr' : 'rtl');
+        document.querySelectorAll('.lang-text').forEach(el => {
+            el.innerText = el.getAttribute(`data-${currentLang}`);
+            if (el.tagName === 'INPUT') el.placeholder = el.getAttribute(`data-${currentLang}`);
+        });
+        document.getElementById('searchInput').placeholder = currentLang === 'en' ? "Search products..." : "ابحث عن المنتجات...";
+        if (!rightPanelInner.classList.contains('translate-x-full') && !rightPanelInner.classList.contains('rtl:-translate-x-full')) {
+            closeRightPanel();
+        }
+    }
+
+    function setActiveSidebar(clickedElement) {
+        document.querySelectorAll('.sidebar-btn').forEach(btn => btn.classList.remove('active'));
+        clickedElement.classList.add('active');
+    }
+
+    function updateCartDisplay() {
+        const cartCounter = document.getElementById('cartCount');
+        if (cartCounter) cartCounter.innerText = shoppingCart.length;
+
+        const ticks = document.querySelectorAll('.in-cart-tick');
+        ticks.forEach(tick => {
+            const nameEn = tick.getAttribute('data-name-en');
+            const isInCart = shoppingCart.some(item => item.nameEn === nameEn);
+            if (isInCart) {
+                tick.classList.remove('opacity-0', 'scale-0');
+                tick.classList.add('opacity-100', 'scale-100');
+            } else {
+                tick.classList.add('opacity-0', 'scale-0');
+                tick.classList.remove('opacity-100', 'scale-100');
+            }
+        });
+    }
+
+    let activeCategory = 'ALL';
+    let currentSearchQuery = '';
+
+    function handleSearch(query) {
+        currentSearchQuery = query.toLowerCase().trim();
+        applyFilters();
+    }
+
+    function filterProducts(categoryName, element) {
+        activeCategory = categoryName;
+        document.querySelectorAll('.category-item .w-16, .category-item .md\\:w-20').forEach(el => {
+            el.classList.remove('shadow-[0_4px_15px_rgba(16,185,129,0.3)]', 'border-[var(--accent-green)]');
+            el.classList.add('shadow-sm', 'border-transparent');
+        });
+        const circle = element.querySelector('.w-16, .md\\:w-20');
+        circle.classList.remove('shadow-sm', 'border-transparent');
+        circle.classList.add('shadow-[0_4px_15px_rgba(16,185,129,0.3)]', 'border-[var(--accent-green)]');
+        applyFilters();
+    }
+
+    function applyFilters() {
+        const cards = document.querySelectorAll('.product-card');
+        cards.forEach(card => {
+            const productCat = card.getAttribute('data-cat');
+            const nameEnEl = card.querySelector('.en-only');
+            const nameArEl = card.querySelector('.ar-only');
+            const nameEn = nameEnEl ? nameEnEl.innerText.toLowerCase() : '';
+            const nameAr = nameArEl ? nameArEl.innerText.toLowerCase() : '';
+
+            const matchesCategory = (activeCategory === 'ALL' || productCat === activeCategory);
+            const matchesSearch = (nameEn.includes(currentSearchQuery) || nameAr.includes(currentSearchQuery));
+
+            if (matchesCategory && matchesSearch) {
+                card.style.display = 'flex';
+                card.style.opacity = '0';
+                setTimeout(() => { card.style.transition = 'opacity 0.3s ease'; card.style.opacity = '1'; }, 10);
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    function openPanel() {
+        rightPanelInner.classList.remove('translate-x-full', 'rtl:-translate-x-full');
+        rightPanelInner.classList.add('translate-x-0');
+    }
+
+    function closeRightPanel() {
+        rightPanelInner.classList.remove('translate-x-0');
+        rightPanelInner.classList.add('translate-x-full', 'rtl:-translate-x-full');
+        const homeBtn = document.getElementById('btnHome');
+        if(homeBtn) setActiveSidebar(homeBtn);
+    }
+
+    function openDetailPanel(nameEn, nameAr, imgUrl, volumes, units) {
+        currentSelectedVolume = "";
+        currentSelectedUnit = "";
+
+        const title = currentLang === 'en' ? nameEn : nameAr;
+        const lblDetail = currentLang === 'en' ? "Detail Product" : "تفاصيل المنتج";
+        const lblVol = currentLang === 'en' ? "Volume" : "الحجم";
+        const lblUnit = currentLang === 'en' ? "Units" : "الوحدات";
+        const lblQty = currentLang === 'en' ? "Quantity" : "الكمية";
+        const lblBtn = currentLang === 'en' ? "Confirm & Add" : "تأكيد وإضافة";
+
+        const isWishlisted = wishlist.some(item => item.nameEn === nameEn);
+        const wishIconFill = isWishlisted ? 'currentColor' : 'none';
+
+        let volHtml = volumes.length ? volumes.map(v => `<button id="dvol-${v.replace(/\s+/g,'-')}" onclick="selectDetailVolume('${v}')" class="border border-[var(--border-color)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none bg-[var(--bg-base)]">${v}</button>`).join('') : '<span class="text-xs text-[var(--text-muted)]">N/A</span>';
+        let unitHtml = units.length ? units.map(u => `<button id="dunit-${u.replace(/\s+/g,'-')}" onclick="selectDetailUnit('${u}')" class="border border-[var(--border-color)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none bg-[var(--bg-base)]">${u}</button>`).join('') : '<span class="text-xs text-[var(--text-muted)]">N/A</span>';
+
+        rightPanelInner.innerHTML = `
+            <div class="p-6 border-b border-[var(--border-color)] flex justify-between items-center shrink-0">
+                <h2 class="text-[10px] font-black uppercase tracking-widest gold-text">${lblDetail}</h2>
+                <button onclick="closeRightPanel()" class="w-8 h-8 flex items-center justify-center bg-[var(--bg-base)] rounded-full text-[var(--text-muted)] hover:text-red-500 transition">✕</button>
+            </div>
+            <div class="flex-grow overflow-y-auto custom-scroll p-6 md:p-8">
+                <div class="w-full h-64 bg-[var(--bg-base)] border border-[var(--border-color)] flex justify-center items-center rounded-2xl p-6 mb-8">
+                    <img src="${imgUrl}" class="max-h-full object-contain drop-shadow-md">
+                </div>
+                <h2 id="injectNameEn" class="text-2xl font-bold text-[var(--text-main)] uppercase tracking-wide leading-tight">${title}</h2>
+                <input type="hidden" id="pDataEn" value="${nameEn}">
+                <input type="hidden" id="pDataAr" value="${nameAr}">
+
+                <div class="mt-8 space-y-6">
+                    <div>
+                        <label class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-3 block">${lblVol}</label>
+                        <div id="detailVolPills" class="flex flex-wrap gap-2">${volHtml}</div>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-3 block">${lblUnit}</label>
+                        <div id="detailUnitPills" class="flex flex-wrap gap-2">${unitHtml}</div>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-3 block">${lblQty}</label>
+                        <div class="flex items-center border border-[var(--border-color)] rounded-lg w-full overflow-hidden bg-[var(--bg-base)] h-12">
+                            <button onclick="changeDetailQty(-1)" class="flex-1 text-[var(--text-muted)] hover:text-[var(--accent-green)] font-bold text-lg">-</button>
+                            <input type="number" id="detailQty" value="1" min="1" class="w-16 text-center font-bold bg-[var(--bg-panel)] text-[var(--text-main)] h-full border-x border-[var(--border-color)] outline-none appearance-none">
+                            <button onclick="changeDetailQty(1)" class="flex-1 text-[var(--text-muted)] hover:text-[var(--accent-green)] font-bold text-lg">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-3 p-6 border-t border-[var(--border-color)] shrink-0 bg-[var(--bg-panel)]">
+                <button onclick="toggleWishlist('${nameEn}', '${nameAr}', '${imgUrl}')" class="w-14 border border-[var(--border-color)] text-[var(--text-muted)] rounded-xl flex items-center justify-center hover:border-[var(--accent-green)] hover:text-[var(--accent-green)] hover:bg-[var(--accent-green)]/5 transition group">
+                    <svg id="wishIcon" class="w-5 h-5 transition-colors" fill="${wishIconFill}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>
+                </button>
+                <button onclick="addFromDetailPanel()" class="flex-1 gold-btn py-4 rounded-xl font-black uppercase tracking-widest text-[11px] shadow-lg">${lblBtn}</button>
+            </div>
+        `;
+        openPanel();
+    }
+
+    function toggleWishlist(nameEn, nameAr, imgUrl) {
+        const idx = wishlist.findIndex(item => item.nameEn === nameEn);
+        const wishIcon = document.getElementById('wishIcon');
+        if (idx > -1) {
+            wishlist.splice(idx, 1);
+            if(wishIcon) wishIcon.setAttribute('fill', 'none');
+            if(wishIcon) wishIcon.classList.remove('text-[var(--accent-green)]');
+        } else {
+            wishlist.push({ nameEn, nameAr, imgUrl });
+            if(wishIcon) wishIcon.setAttribute('fill', 'currentColor');
+            if(wishIcon) wishIcon.classList.add('text-[var(--accent-green)]');
+        }
+        localStorage.setItem('growGreenWishlist', JSON.stringify(wishlist));
+    }
+
+    function openWishlistPanel() {
+        const cartBtns = document.querySelectorAll('.sidebar-btn');
+        if(cartBtns.length > 2) setActiveSidebar(cartBtns[2]);
+
+        const lblTitle = currentLang === 'en' ? "Your Wishlist" : "قائمة المفضلة";
+        const lblEmpty = currentLang === 'en' ? "Your wishlist is empty." : "القائمة فارغة.";
+
+        let itemsHtml = wishlist.length === 0
+            ? `<div class="flex flex-col items-center justify-center h-full opacity-50 mt-20"><svg class="w-16 h-16 text-[var(--text-muted)] mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg><p class="text-center text-[var(--text-muted)] font-bold text-xs tracking-widest uppercase">${lblEmpty}</p></div>`
+            : wishlist.map((item, index) => {
+                const displayName = currentLang === 'en' ? item.nameEn : item.nameAr;
+                return `
+                <div class="bg-[var(--bg-base)] p-3 rounded-2xl border border-[var(--border-color)] flex items-center gap-4 shadow-sm hover:border-[var(--accent-green)] transition group">
+                    <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center p-2 border border-[var(--border-color)] shrink-0">
+                        <img src="${item.imgUrl}" class="max-h-full object-contain">
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-bold text-[var(--text-main)] text-xs uppercase tracking-wide truncate">${displayName}</h4>
+                    </div>
+                    <button onclick="removeFromWishlist(${index})" class="w-8 h-8 flex items-center justify-center bg-[var(--bg-panel)] rounded-full text-[var(--text-muted)] hover:text-red-500 hover:bg-red-50 transition shrink-0 shadow-sm border border-[var(--border-color)]">✕</button>
+                </div>
+            `}).join('');
+
+        rightPanelInner.innerHTML = `
+            <div class="p-6 border-b border-[var(--border-color)] flex justify-between items-center shrink-0">
+                <h2 class="text-[10px] font-black uppercase tracking-widest gold-text">${lblTitle}</h2>
+                <button onclick="closeRightPanel()" class="w-8 h-8 flex items-center justify-center bg-[var(--bg-base)] rounded-full text-[var(--text-muted)] hover:text-red-500 transition">✕</button>
+            </div>
+            <div class="flex-grow overflow-y-auto custom-scroll p-6 space-y-4">
+                ${itemsHtml}
+            </div>
+        `;
+        openPanel();
+    }
+
+    function removeFromWishlist(index) {
+        wishlist.splice(index, 1);
+        localStorage.setItem('growGreenWishlist', JSON.stringify(wishlist));
+        openWishlistPanel();
+    }
+
+    function selectDetailVolume(vol) {
+        currentSelectedVolume = vol;
+        document.getElementById('detailVolPills').querySelectorAll('button').forEach(btn => btn.className = "border border-[var(--border-color)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none bg-[var(--bg-base)]");
+        document.getElementById('dvol-' + vol.replace(/\s+/g,'-')).className = "border-2 border-[var(--accent-green)] text-[var(--accent-green)] bg-[var(--accent-green)]/10 rounded-lg px-4 py-2 text-[10px] font-black uppercase transition focus:outline-none";
+    }
+
+    function selectDetailUnit(unit) {
+        currentSelectedUnit = unit;
+        document.getElementById('detailUnitPills').querySelectorAll('button').forEach(btn => btn.className = "border border-[var(--border-color)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none bg-[var(--bg-base)]");
+        document.getElementById('dunit-' + unit.replace(/\s+/g,'-')).className = "border-2 border-[var(--accent-green)] text-[var(--accent-green)] bg-[var(--accent-green)]/10 rounded-lg px-4 py-2 text-[10px] font-black uppercase transition focus:outline-none";
+    }
+
+    function changeDetailQty(amount) {
+        let q = document.getElementById('detailQty');
+        let current = parseInt(q.value);
+        if (current + amount >= 1) q.value = current + amount;
+    }
+
+    function addFromDetailPanel() {
+        let qty = parseInt(document.getElementById('detailQty').value);
+        let nameEn = document.getElementById('pDataEn').value;
+        let nameAr = document.getElementById('pDataAr').value;
+
+        if (currentSelectedVolume === "" || currentSelectedUnit === "") {
+            alert(currentLang === 'en' ? "Please select both a Volume and a Unit." : "الرجاء اختيار الحجم والوحدة.");
+            return;
+        }
+        processCartAdd(nameEn, nameAr, currentSelectedVolume, currentSelectedUnit, qty);
+        closeRightPanel();
+    }
+
+    function openCartPanel() {
+        const cartBtns = document.querySelectorAll('.sidebar-btn');
+        if(cartBtns.length > 1) setActiveSidebar(cartBtns[1]);
+
+        const lblTitle = currentLang === 'en' ? "Your Order List" : "قائمة الطلب";
+        const lblEmpty = currentLang === 'en' ? "Your list is empty." : "القائمة فارغة.";
+        const lblBtn = currentLang === 'en' ? "Confirm via WhatsApp" : "تأكيد عبر واتساب";
+
+        let itemsHtml = shoppingCart.length === 0
+            ? `<div class="flex flex-col items-center justify-center h-full opacity-50 mt-20"><svg class="w-16 h-16 text-[var(--text-muted)] mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg><p class="text-center text-[var(--text-muted)] font-bold text-xs tracking-widest uppercase">${lblEmpty}</p></div>`
+            : shoppingCart.map((item, index) => {
+                const displayName = currentLang === 'en' ? item.nameEn : item.nameAr;
+                return `
+                <div class="bg-[var(--bg-base)] p-4 rounded-2xl border border-[var(--border-color)] flex justify-between items-center shadow-sm hover:border-[var(--accent-green)] transition group">
+                    <div>
+                        <h4 class="font-bold text-[var(--text-main)] text-[11px] uppercase tracking-wide mb-1">${displayName}</h4>
+                        <div class="flex items-center gap-2">
+                            <span class="bg-[var(--accent-green)]/10 text-[var(--accent-green)] px-2 py-0.5 rounded text-[10px] font-bold border border-[var(--accent-green)]/20">${item.qty}x</span>
+                            <span class="text-[10px] text-[var(--text-muted)] font-semibold">${item.unit} (${item.volume})</span>
+                        </div>
+                    </div>
+                    <button onclick="removeItem(${index})" class="w-8 h-8 flex items-center justify-center bg-[var(--bg-panel)] rounded-full text-[var(--text-muted)] hover:text-red-500 hover:bg-red-50 transition shrink-0 shadow-sm border border-[var(--border-color)]">✕</button>
+                </div>
+            `}).join('');
+
+        rightPanelInner.innerHTML = `
+            <div class="p-6 border-b border-[var(--border-color)] flex justify-between items-center shrink-0">
+                <h2 class="text-[10px] font-black uppercase tracking-widest gold-text">${lblTitle}</h2>
+                <button onclick="closeRightPanel()" class="w-8 h-8 flex items-center justify-center bg-[var(--bg-base)] rounded-full text-[var(--text-muted)] hover:text-red-500 transition">✕</button>
+            </div>
+            <div class="flex-grow overflow-y-auto custom-scroll p-6 space-y-4">
+                ${itemsHtml}
+            </div>
+            <div class="p-6 border-t border-[var(--border-color)] shrink-0 bg-[var(--bg-panel)]">
+                <button onclick="sendToWhatsApp()" class="w-full gold-btn py-4 rounded-xl font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-2 shadow-lg">
+                    <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg>
+                    ${lblBtn}
+                </button>
+            </div>
+        `;
+        openPanel();
+    }
+
+    function openQuickAddModal(nameEn, nameAr, volumes, units) {
+        currentSelectedVolume = "";
+        currentSelectedUnit = "";
+        quickQtyInput.value = 1;
+
+        document.getElementById('quickName').innerText = currentLang === 'en' ? nameEn : nameAr;
+        document.getElementById('quickDataEn').value = nameEn;
+        document.getElementById('quickDataAr').value = nameAr;
+
+        document.getElementById('quickVolumePills').innerHTML = volumes.length ? volumes.map(v => `<button type="button" id="qvol-${v.replace(/\s+/g,'-')}" onclick="selectQuickVolume('${v}')" class="border border-[var(--border-color)] bg-[var(--bg-base)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none">${v}</button>`).join('') : '<span class="text-[10px] text-[var(--text-muted)]">N/A</span>';
+        document.getElementById('quickUnitPills').innerHTML = units.length ? units.map(u => `<button type="button" id="qunit-${u.replace(/\s+/g,'-')}" onclick="selectQuickUnit('${u}')" class="border border-[var(--border-color)] bg-[var(--bg-base)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none">${u}</button>`).join('') : '<span class="text-[10px] text-[var(--text-muted)]">N/A</span>';
+
+        quickAddModal.classList.remove('hidden');
+    }
+
+    function closeQuickAdd() { quickAddModal.classList.add('hidden'); }
+
+    function selectQuickVolume(vol) {
+        currentSelectedVolume = vol;
+        document.getElementById('quickVolumePills').querySelectorAll('button').forEach(btn => btn.className = "border border-[var(--border-color)] bg-[var(--bg-base)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none");
+        document.getElementById('qvol-' + vol.replace(/\s+/g,'-')).className = "border-2 border-[var(--accent-green)] text-[var(--accent-green)] bg-[var(--accent-green)]/10 rounded-lg px-4 py-2 text-[10px] font-black uppercase transition focus:outline-none";
+    }
+
+    function selectQuickUnit(unit) {
+        currentSelectedUnit = unit;
+        document.getElementById('quickUnitPills').querySelectorAll('button').forEach(btn => btn.className = "border border-[var(--border-color)] bg-[var(--bg-base)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none");
+        document.getElementById('qunit-' + unit.replace(/\s+/g,'-')).className = "border-2 border-[var(--accent-green)] text-[var(--accent-green)] bg-[var(--accent-green)]/10 rounded-lg px-4 py-2 text-[10px] font-black uppercase transition focus:outline-none";
+    }
+
+    function changeQuickQty(amount) {
+        let current = parseInt(quickQtyInput.value);
+        if (current + amount >= 1) quickQtyInput.value = current + amount;
+    }
+
+    function confirmQuickAdd() {
+        let qty = parseInt(quickQtyInput.value);
+        let nameEn = document.getElementById('quickDataEn').value;
+        let nameAr = document.getElementById('quickDataAr').value;
+
+        if (currentSelectedVolume === "" || currentSelectedUnit === "") {
+            alert(currentLang === 'en' ? "Please select both a Volume and a Unit." : "الرجاء اختيار الحجم والوحدة.");
+            return;
+        }
+
+        processCartAdd(nameEn, nameAr, currentSelectedVolume, currentSelectedUnit, qty);
+        closeQuickAdd();
+    }
+
+    function processCartAdd(nameEn, nameAr, vol, unit, qty) {
+        let idx = shoppingCart.findIndex(item => item.nameEn === nameEn && item.volume === vol && item.unit === unit);
+        if (idx > -1) { shoppingCart[idx].qty += qty; }
+        else { shoppingCart.push({ nameEn, nameAr, volume: vol, unit, qty }); }
+        localStorage.setItem('growGreenCart', JSON.stringify(shoppingCart));
+        updateCartDisplay();
+    }
+
+    function removeItem(index) {
+        shoppingCart.splice(index, 1);
+        localStorage.setItem('growGreenCart', JSON.stringify(shoppingCart));
+        updateCartDisplay();
+        openCartPanel();
+    }
+
+    function sendToWhatsApp() {
+        if (shoppingCart.length === 0) {
+            alert(currentLang === 'en' ? "Your list is empty!" : "القائمة فارغة!");
+            return;
+        }
+        const companyPhone = "966500825316";
+        let message = currentLang === 'en'
+            ? "Hello Grow Green Trading Co! 👋\nHere is my new order request:\n\n"
+            : "مرحباً شركة جرو جرين التجارية! 👋\nإليك طلب الشراء الخاص بي:\n\n";
+
+        shoppingCart.forEach((item, index) => {
+            const itemName = currentLang === 'en' ? item.nameEn : item.nameAr;
+            const qtyText = currentLang === 'en' ? "Quantity" : "الكمية";
+            const volText = currentLang === 'en' ? "Volume" : "الحجم";
+            message += `${index + 1}. *${itemName}*\n   ${qtyText}: ${item.qty} ${item.unit}\n   ${volText}: ${item.volume}\n\n`;
+        });
+
+        message += currentLang === 'en' ? "Please review and confirm. Thank you!" : "يرجى المراجعة والتأكيد. شكراً لكم!";
+        window.open(`https://wa.me/${companyPhone}?text=${encodeURIComponent(message)}`, '_blank');
+
+        shoppingCart = [];
+        localStorage.setItem('growGreenCart', JSON.stringify(shoppingCart));
+        updateCartDisplay();
+        closeRightPanel();
+    }
+</script>
+
+</body>
+</html>

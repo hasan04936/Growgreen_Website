@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grow Green | Admin Command Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #0A0A0A; color: #FFFFFF; }
+        .custom-scroll::-webkit-scrollbar { width: 5px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background-color: #222; border-radius: 10px; }
+
+        .gold-text { color: #D4AF37; }
+        .gold-border { border-color: #D4AF37; }
+        .gold-btn { background: linear-gradient(135deg, #E6C875, #D4AF37); color: #000; transition: all 0.3s; }
+        .gold-btn:hover { box-shadow: 0 0 15px rgba(212,175,55,0.4); transform: scale(1.02); }
+
+        .sidebar-item { transition: all 0.3s; border-left: 3px solid transparent; }
+        .sidebar-item:hover { background-color: rgba(212,175,55,0.05); border-left-color: #D4AF37; color: #D4AF37; }
+        .sidebar-item.active { background-color: rgba(212,175,55,0.1); border-left-color: #D4AF37; color: #D4AF37; font-weight: bold; }
+    </style>
+</head>
+<body class="h-screen flex overflow-hidden">
+
+    <aside class="w-64 bg-[#111111] border-e border-[#222222] flex flex-col shrink-0 z-20">
+        <div class="h-20 flex items-center px-8 border-b border-[#222222]">
+            <h1 class="text-xl font-extrabold uppercase tracking-widest text-white">
+                GROW <span class="gold-text">GREEN</span>
+            </h1>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-6 custom-scroll">
+            <p class="px-8 text-[10px] font-black uppercase tracking-widest text-gray-500 mb-4">Main Menu</p>
+
+            <a href="#" class="sidebar-item active flex items-center gap-4 px-8 py-4 text-sm text-gray-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                Dashboard
+            </a>
+
+            <a href="{% url 'admin_inventory' %}" class="sidebar-item flex items-center gap-4 px-8 py-4 text-sm text-gray-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                Manage Inventory
+            </a>
+
+            <a href="{% url 'admin_categories' %}" class="sidebar-item flex items-center gap-4 px-8 py-4 text-sm text-gray-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
+                Categories
+            </a>
+
+            <a href="{% url 'admin_excel_upload' %}" class="sidebar-item flex items-center gap-4 px-8 py-4 text-sm text-gray-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                Excel Bulk Upload
+            </a>
+
+            <a href="{% url 'admin_attributes' %}" class="sidebar-item flex items-center gap-4 px-8 py-4 text-sm text-gray-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                Product Attributes
+            </a>
+
+            <p class="px-8 text-[10px] font-black uppercase tracking-widest text-gray-500 mt-8 mb-4">System</p>
+
+            <a href="/" target="_blank" class="sidebar-item flex items-center gap-4 px-8 py-4 text-sm text-gray-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                View Live Store
+            </a>
+            <a href="{% url 'admin_banners' %}" class="sidebar-item flex items-center gap-4 px-8 py-4 text-sm text-gray-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                Manage Banners
+            </a>
+        </nav>
+
+        <div class="p-6 border-t border-[#222222] bg-[#151515]">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-full gold-btn flex items-center justify-center font-bold text-lg">A</div>
+                <div>
+                    <p class="text-sm font-bold text-white">Admin User</p>
+                    <p class="text-[10px] text-gray-400 uppercase tracking-widest">Grow Green Co.</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#0A0A0A]">
+
+        <header class="h-20 px-10 flex items-center justify-between border-b border-[#222222] shrink-0 bg-[#111111]">
+            <h2 class="text-xl font-bold uppercase tracking-widest text-white">Dashboard Overview</h2>
+
+            <div class="flex items-center gap-4">
+                <p class="text-xs text-gray-400 mr-4" id="currentDate"></p>
+                <a href="{% url 'admin_add_product' %}" class="gold-btn px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    New Product
+                </a>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto custom-scroll p-10">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <div class="bg-[#111111] border border-[#222222] rounded-2xl p-6 relative overflow-hidden group hover:border-[#D4AF37]/50 transition">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-[#D4AF37]/10 rounded-full blur-xl group-hover:bg-[#D4AF37]/20 transition"></div>
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <p class="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Total Inventory</p>
+                            <h3 class="text-4xl font-black text-white">{{ product_count|default:"0" }}</h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-[#1A1A1A] border border-[#333] flex items-center justify-center text-[#D4AF37]">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                        </div>
+                    </div>
+                    <p class="text-xs text-green-500 font-bold">+ Active in store</p>
+                </div>
+
+                <div class="bg-[#111111] border border-[#222222] rounded-2xl p-6 relative overflow-hidden group hover:border-[#D4AF37]/50 transition">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-[#D4AF37]/10 rounded-full blur-xl group-hover:bg-[#D4AF37]/20 transition"></div>
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <p class="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Collections</p>
+                            <h3 class="text-4xl font-black text-white">{{ category_count|default:"0" }}</h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-[#1A1A1A] border border-[#333] flex items-center justify-center text-[#D4AF37]">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400 font-medium">Mapped across store</p>
+                </div>
+
+                <div class="bg-[#111111] border border-[#222222] rounded-2xl p-6 relative overflow-hidden flex flex-col justify-center">
+                    <p class="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-4">System Tools</p>
+                    <a href="{% url 'admin_excel_upload' %}" class="w-full border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black font-bold uppercase tracking-widest text-xs py-3 rounded-lg text-center transition mb-3">
+                        Bulk Upload Excel
+                    </a>
+                    <a href="/admin/" class="w-full bg-[#1A1A1A] hover:bg-[#222] border border-[#333] text-white font-bold uppercase tracking-widest text-xs py-3 rounded-lg text-center transition">
+                        Open Django Admin
+                    </a>
+                </div>
+            </div>
+
+            <div class="bg-[#111111] border border-[#222222] rounded-2xl overflow-hidden">
+                <div class="p-6 border-b border-[#222222] flex justify-between items-center">
+                    <h3 class="text-sm font-black uppercase tracking-widest text-white">Recently Added Products</h3>
+                    <a href="{% url 'admin_inventory' %}" class="text-xs text-[#D4AF37] hover:text-white transition font-bold uppercase tracking-wider">View All</a>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-[#151515] text-[10px] uppercase tracking-widest text-gray-500">
+                                <th class="p-4 font-black">Product Name</th>
+                                <th class="p-4 font-black">Category</th>
+                                <th class="p-4 font-black">Status</th>
+                                <th class="p-4 font-black text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            {% for product in recent_products %}
+                            <tr class="border-b border-[#222222] hover:bg-[#151515] transition">
+                                <td class="p-4 font-semibold text-white flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-white rounded border border-gray-800 flex items-center justify-center p-1">
+                                        {% if product.image_1 %}
+                                            <img src="{{ product.image_1.url }}" class="max-h-full object-contain">
+                                        {% endif %}
+                                    </div>
+                                    {{ product.name_en }}
+                                </td>
+                                <td class="p-4 text-gray-400">{{ product.category.name_en }}</td>
+                                <td class="p-4">
+                                    {% if product.is_new_arrival %}
+                                        <span class="bg-[#D4AF37]/20 text-[#D4AF37] px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">New</span>
+                                    {% else %}
+                                        <span class="bg-gray-800 text-gray-400 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">Active</span>
+                                    {% endif %}
+                                </td>
+                                <td class="p-4 text-right">
+                                    <a href="{% url 'admin_edit_product' product.id %}" class="text-gray-500 hover:text-[#D4AF37] font-medium text-xs transition">Edit</a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="p-8 text-center text-gray-500 font-light text-sm">No products found. Upload some via Excel!</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Display current date
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('currentDate').innerText = new Date().toLocaleDateString('en-US', options);
+    </script>
+</body>
+</html>

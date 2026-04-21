@@ -1,0 +1,17 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+<div style="margin: 20px; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <h2 style="margin-bottom: 20px;">Upload Product Excel File</h2>
+    <p style="margin-bottom: 20px; color: #666;">Please ensure you are uploading the exact template downloaded from the previous page. Images cannot be uploaded via Excel; you can attach those later.</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="excel_file" accept=".xlsx, .xls" required style="margin-bottom: 20px; display: block;">
+        <button type="submit" style="background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
+            Upload Products
+        </button>
+    </form>
+</div>
+{% endblock %}
