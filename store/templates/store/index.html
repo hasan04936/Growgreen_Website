@@ -65,9 +65,7 @@
         <button onclick="setActiveSidebar(this); closeRightPanel();" class="sidebar-btn active scale-90 md:scale-100" id="btnHome"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg></button>
         <button onclick="setActiveSidebar(this); openCartPanel();" class="sidebar-btn scale-90 md:scale-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg></button>
         <button onclick="setActiveSidebar(this); openWishlistPanel();" class="sidebar-btn scale-90 md:scale-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg></button>
-
         <button onclick="setActiveSidebar(this); openContactModal();" class="sidebar-btn scale-90 md:scale-100"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg></button>
-
         <button onclick="setActiveSidebar(this)" class="sidebar-btn scale-90 md:scale-100"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></button>
 
         <div class="mt-auto p-3 mb-2">
@@ -178,7 +176,7 @@
                         <h3 class="text-[13px] font-black uppercase tracking-[0.2em] text-[var(--text-main)] lang-text" data-en="Exclusive Products" data-ar="منتجات حصرية">Exclusive Products</h3>
                     </div>
 
-                    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 md:gap-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 md:gap-6">
                         {% for product in products %}
                         <div class="product-card bg-[var(--bg-panel)] rounded-2xl p-4 flex flex-col relative group hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[var(--border-color)] hover:border-[var(--accent-green)]/30 transition-all duration-300" data-cat="{{ product.category.name_en|escapejs }}">
 
@@ -210,7 +208,8 @@
                                         '{{ product.name_ar|escapejs }}',
                                         '{% if product.image_1 %}{{ product.image_1.url }}{% endif %}',
                                         [{% for v in product.available_volumes.all %}'{{ v.name_en|escapejs }}'{% if not forloop.last %}, {% endif %}{% endfor %}],
-                                        [{% for u in product.available_units.all %}'{{ u.name_en|escapejs }}'{% if not forloop.last %}, {% endif %}{% endfor %}]
+                                        [{% for u in product.available_units.all %}'{{ u.name_en|escapejs }}'{% if not forloop.last %}, {% endif %}{% endfor %}],
+                                        [{% for c in product.available_colors.all %}'{{ c.name_en|escapejs }}'{% if not forloop.last %}, {% endif %}{% endfor %}]
                                     )" class="flex-1 bg-[var(--bg-base)] hover:bg-[var(--border-color)] text-[var(--text-main)] rounded-lg py-2 flex items-center justify-center transition">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                     </button>
@@ -219,7 +218,8 @@
                                         '{{ product.name_en|escapejs }}',
                                         '{{ product.name_ar|escapejs }}',
                                         [{% for v in product.available_volumes.all %}'{{ v.name_en|escapejs }}'{% if not forloop.last %}, {% endif %}{% endfor %}],
-                                        [{% for u in product.available_units.all %}'{{ u.name_en|escapejs }}'{% if not forloop.last %}, {% endif %}{% endfor %}]
+                                        [{% for u in product.available_units.all %}'{{ u.name_en|escapejs }}'{% if not forloop.last %}, {% endif %}{% endfor %}],
+                                        [{% for c in product.available_colors.all %}'{{ c.name_en|escapejs }}'{% if not forloop.last %}, {% endif %}{% endfor %}]
                                     )" class="flex-[3] gold-btn rounded-lg py-2 text-[10px] font-bold uppercase tracking-widest flex items-center justify-center gap-1">
                                         <span class="lang-text" data-en="Add" data-ar="اضف">Add</span>
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
@@ -249,6 +249,10 @@
             <h3 id="quickName" class="text-base font-bold text-[var(--text-main)] uppercase tracking-wide mb-6 pe-6">Product</h3>
 
             <div class="space-y-6">
+                <div id="quickColorContainer" class="hidden">
+                    <label class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-3 block lang-text" data-en="Select Variant" data-ar="اختر النوع">Select Variant</label>
+                    <div id="quickColorPills" class="flex flex-wrap gap-2"></div>
+                </div>
                 <div>
                     <label class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-3 block">
                         <span class="lang-text" data-en="Select Volume" data-ar="اختر الحجم">Select Volume</span>
@@ -282,7 +286,6 @@
             <h3 class="text-base font-bold text-[var(--text-main)] uppercase tracking-wide mb-6 pe-6 lang-text" data-en="Contact Us" data-ar="اتصل بنا">Contact Us</h3>
 
             <div class="flex flex-col gap-3">
-
                 <div class="p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-base)] flex flex-col gap-3">
                     <p class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest lang-text" data-en="Direct Call" data-ar="اتصال مباشر">Direct Call</p>
 
@@ -323,7 +326,6 @@
                         <span class="font-bold text-[var(--text-main)] text-[10px] uppercase tracking-wider">Snap</span>
                     </a>
                 </div>
-
             </div>
         </div>
     </div>
@@ -382,9 +384,9 @@
     const contactModal = document.getElementById('contactModal');
     const quickQtyInput = document.getElementById('quickQty');
 
-    // CHANGED: currentSelectedVolume is now an array to hold multiple selections
     let currentSelectedVolumes = [];
     let currentSelectedUnit = "";
+    let currentSelectedColor = "";
 
     let shoppingCart = JSON.parse(localStorage.getItem('growGreenCart')) || [];
     let wishlist = JSON.parse(localStorage.getItem('growGreenWishlist')) || [];
@@ -499,12 +501,23 @@
         if(homeBtn) setActiveSidebar(homeBtn);
     }
 
-    function openDetailPanel(nameEn, nameAr, imgUrl, volumes, units) {
-        currentSelectedVolumes = []; // Reset multiple volumes
+    function createChoiceButtons(type, values) {
+        if (!values || !values.length) return '<span class="text-xs text-[var(--text-muted)]">N/A</span>';
+        return values.map(value => `
+            <button id="${type}-${value.replace(/\s+/g, '-')}" onclick="${type === 'dvol' ? 'selectDetailVolume' : type === 'dunit' ? 'selectDetailUnit' : type === 'qvol' ? 'selectQuickVolume' : type === 'qunit' ? 'selectQuickUnit' : type === 'dcolor' ? 'selectDetailColor' : 'selectQuickColor'}('${value}')" class="border border-[var(--border-color)] bg-[var(--bg-base)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none">
+                ${value}
+            </button>
+        `).join('');
+    }
+
+    function openDetailPanel(nameEn, nameAr, imgUrl, volumes, units, colors) {
+        currentSelectedVolumes = [];
         currentSelectedUnit = "";
+        currentSelectedColor = "";
 
         const title = currentLang === 'en' ? nameEn : nameAr;
         const lblDetail = currentLang === 'en' ? "Detail Product" : "تفاصيل المنتج";
+        const lblColor = currentLang === 'en' ? "Select Variant" : "اختر النوع";
         const lblVol = currentLang === 'en' ? "Volume" : "الحجم";
         const lblUnit = currentLang === 'en' ? "Units" : "الوحدات";
         const lblQty = currentLang === 'en' ? "Quantity" : "الكمية";
@@ -512,12 +525,14 @@
 
         const isWishlisted = wishlist.some(item => item.nameEn === nameEn);
         const wishIconFill = isWishlisted ? 'currentColor' : 'none';
-
-        let volHtml = volumes.length ? volumes.map(v => `<button id="dvol-${v.replace(/\s+/g,'-')}" onclick="selectDetailVolume('${v}')" class="border border-[var(--border-color)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none bg-[var(--bg-base)]">${v}</button>`).join('') : '<span class="text-xs text-[var(--text-muted)]">N/A</span>';
-        let unitHtml = units.length ? units.map(u => `<button id="dunit-${u.replace(/\s+/g,'-')}" onclick="selectDetailUnit('${u}')" class="border border-[var(--border-color)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none bg-[var(--bg-base)]">${u}</button>`).join('') : '<span class="text-xs text-[var(--text-muted)]">N/A</span>';
-
-        // Add the (multi-select) text helper next to the volume label
         const multiSelectHint = currentLang === 'en' ? '(multi-select)' : '(اختيار متعدد)';
+
+        const colorSection = (colors && colors.length > 0) ? `
+            <div>
+                <label class="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest mb-3 block">${lblColor}</label>
+                <div id="detailColorPills" class="flex flex-wrap gap-2">${createChoiceButtons('dcolor', colors)}</div>
+            </div>
+        ` : '';
 
         rightPanelInner.innerHTML = `
             <div class="p-6 border-b border-[var(--border-color)] flex justify-between items-center shrink-0">
@@ -533,19 +548,20 @@
                 <input type="hidden" id="pDataAr" value="${nameAr}">
 
                 <div class="mt-8 space-y-6">
+                    ${colorSection}
                     <div>
-                        <label class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-3 block">
+                        <label class="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest mb-3 block">
                             <span>${lblVol}</span>
                             <span class="text-[8px] tracking-normal normal-case font-medium opacity-60 ms-1">${multiSelectHint}</span>
                         </label>
-                        <div id="detailVolPills" class="flex flex-wrap gap-2">${volHtml}</div>
+                        <div id="detailVolPills" class="flex flex-wrap gap-2">${createChoiceButtons('dvol', volumes)}</div>
                     </div>
                     <div>
-                        <label class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-3 block">${lblUnit}</label>
-                        <div id="detailUnitPills" class="flex flex-wrap gap-2">${unitHtml}</div>
+                        <label class="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest mb-3 block">${lblUnit}</label>
+                        <div id="detailUnitPills" class="flex flex-wrap gap-2">${createChoiceButtons('dunit', units)}</div>
                     </div>
                     <div>
-                        <label class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-3 block">${lblQty}</label>
+                        <label class="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest mb-3 block">${lblQty}</label>
                         <div class="flex items-center border border-[var(--border-color)] rounded-lg w-full overflow-hidden bg-[var(--bg-base)] h-12">
                             <button onclick="changeDetailQty(-1)" class="flex-1 text-[var(--text-muted)] hover:text-[var(--accent-green)] font-bold text-lg">-</button>
                             <input type="number" id="detailQty" value="1" min="1" class="w-16 text-center font-bold bg-[var(--bg-panel)] text-[var(--text-main)] h-full border-x border-[var(--border-color)] outline-none appearance-none">
@@ -562,6 +578,11 @@
             </div>
         `;
         openPanel();
+
+        // AUTO-SELECT
+        if (volumes && volumes.length === 1) selectDetailVolume(volumes[0]);
+        if (units && units.length === 1) selectDetailUnit(units[0]);
+        if (colors && colors.length === 1) selectDetailColor(colors[0]);
     }
 
     function toggleWishlist(nameEn, nameAr, imgUrl) {
@@ -620,17 +641,20 @@
         openWishlistPanel();
     }
 
-    // MULTI-SELECT VOLUME FEATURE (DETAIL PANEL)
+    function selectDetailColor(color) {
+        currentSelectedColor = color;
+        document.getElementById('detailColorPills').querySelectorAll('button').forEach(btn => btn.className = "border border-[var(--border-color)] bg-[var(--bg-base)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none");
+        document.getElementById('dcolor-' + color.replace(/\s+/g,'-')).className = "border-2 border-[var(--accent-green)] text-[var(--accent-green)] bg-[var(--accent-green)]/10 rounded-lg px-4 py-2 text-[10px] font-black uppercase transition focus:outline-none";
+    }
+
     function selectDetailVolume(vol) {
         const btn = document.getElementById('dvol-' + vol.replace(/\s+/g,'-'));
         const idx = currentSelectedVolumes.indexOf(vol);
 
         if (idx > -1) {
-            // Remove it
             currentSelectedVolumes.splice(idx, 1);
-            btn.className = "border border-[var(--border-color)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none bg-[var(--bg-base)]";
+            btn.className = "border border-[var(--border-color)] bg-[var(--bg-base)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none";
         } else {
-            // Add it
             currentSelectedVolumes.push(vol);
             btn.className = "border-2 border-[var(--accent-green)] text-[var(--accent-green)] bg-[var(--accent-green)]/10 rounded-lg px-4 py-2 text-[10px] font-black uppercase transition focus:outline-none";
         }
@@ -638,7 +662,7 @@
 
     function selectDetailUnit(unit) {
         currentSelectedUnit = unit;
-        document.getElementById('detailUnitPills').querySelectorAll('button').forEach(btn => btn.className = "border border-[var(--border-color)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none bg-[var(--bg-base)]");
+        document.getElementById('detailUnitPills').querySelectorAll('button').forEach(btn => btn.className = "border border-[var(--border-color)] bg-[var(--bg-base)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none");
         document.getElementById('dunit-' + unit.replace(/\s+/g,'-')).className = "border-2 border-[var(--accent-green)] text-[var(--accent-green)] bg-[var(--accent-green)]/10 rounded-lg px-4 py-2 text-[10px] font-black uppercase transition focus:outline-none";
     }
 
@@ -658,9 +682,14 @@
             return;
         }
 
-        // Loop through all selected volumes and add them to cart
+        const colorPills = document.getElementById('detailColorPills');
+        if (colorPills && currentSelectedColor === "") {
+            alert(currentLang === 'en' ? "Please select a Variant/Color." : "الرجاء اختيار النوع/اللون.");
+            return;
+        }
+
         currentSelectedVolumes.forEach(vol => {
-            processCartAdd(nameEn, nameAr, vol, currentSelectedUnit, qty);
+            processCartAdd(nameEn, nameAr, vol, currentSelectedUnit, currentSelectedColor, qty);
         });
 
         closeRightPanel();
@@ -678,13 +707,14 @@
             ? `<div class="flex flex-col items-center justify-center h-full opacity-50 mt-20"><svg class="w-16 h-16 text-[var(--text-muted)] mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg><p class="text-center text-[var(--text-muted)] font-bold text-xs tracking-widest uppercase">${lblEmpty}</p></div>`
             : shoppingCart.map((item, index) => {
                 const displayName = currentLang === 'en' ? item.nameEn : item.nameAr;
+                const colorDisplay = item.color ? ` - ${item.color}` : '';
                 return `
                 <div class="bg-[var(--bg-base)] p-4 rounded-2xl border border-[var(--border-color)] flex justify-between items-center shadow-sm hover:border-[var(--accent-green)] transition group">
                     <div>
                         <h4 class="font-bold text-[var(--text-main)] text-[11px] uppercase tracking-wide mb-1">${displayName}</h4>
                         <div class="flex items-center gap-2">
                             <span class="bg-[var(--accent-green)]/10 text-[var(--accent-green)] px-2 py-0.5 rounded text-[10px] font-bold border border-[var(--accent-green)]/20">${item.qty}x</span>
-                            <span class="text-[10px] text-[var(--text-muted)] font-semibold">${item.unit} (${item.volume})</span>
+                            <span class="text-[10px] text-[var(--text-muted)] font-semibold">${item.unit} (${item.volume})${colorDisplay}</span>
                         </div>
                     </div>
                     <button onclick="removeItem(${index})" class="w-8 h-8 flex items-center justify-center bg-[var(--bg-panel)] rounded-full text-[var(--text-muted)] hover:text-red-500 hover:bg-red-50 transition shrink-0 shadow-sm border border-[var(--border-color)]">✕</button>
@@ -709,47 +739,62 @@
         openPanel();
     }
 
-    // --- NEW CONTACT MODAL FUNCTIONS ---
     function openContactModal() {
         contactModal.classList.remove('hidden');
     }
 
     function closeContactModal() {
         contactModal.classList.add('hidden');
-        // Reset sidebar button active state back to Home
         const homeBtn = document.getElementById('btnHome');
         if (homeBtn) setActiveSidebar(homeBtn);
     }
-    // -----------------------------------
 
-    function openQuickAddModal(nameEn, nameAr, volumes, units) {
-        currentSelectedVolumes = []; // Reset multiple volumes
+    function openQuickAddModal(nameEn, nameAr, volumes, units, colors) {
+        currentSelectedVolumes = [];
         currentSelectedUnit = "";
+        currentSelectedColor = "";
         quickQtyInput.value = 1;
 
         document.getElementById('quickName').innerText = currentLang === 'en' ? nameEn : nameAr;
         document.getElementById('quickDataEn').value = nameEn;
         document.getElementById('quickDataAr').value = nameAr;
 
-        document.getElementById('quickVolumePills').innerHTML = volumes.length ? volumes.map(v => `<button type="button" id="qvol-${v.replace(/\s+/g,'-')}" onclick="selectQuickVolume('${v}')" class="border border-[var(--border-color)] bg-[var(--bg-base)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none">${v}</button>`).join('') : '<span class="text-[10px] text-[var(--text-muted)]">N/A</span>';
-        document.getElementById('quickUnitPills').innerHTML = units.length ? units.map(u => `<button type="button" id="qunit-${u.replace(/\s+/g,'-')}" onclick="selectQuickUnit('${u}')" class="border border-[var(--border-color)] bg-[var(--bg-base)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none">${u}</button>`).join('') : '<span class="text-[10px] text-[var(--text-muted)]">N/A</span>';
+        document.getElementById('quickVolumePills').innerHTML = createChoiceButtons('qvol', volumes);
+        document.getElementById('quickUnitPills').innerHTML = createChoiceButtons('qunit', units);
+
+        const colorContainer = document.getElementById('quickColorContainer');
+        if (colors && colors.length > 0) {
+            colorContainer.classList.remove('hidden');
+            document.getElementById('quickColorPills').innerHTML = createChoiceButtons('qcolor', colors);
+        } else {
+            colorContainer.classList.add('hidden');
+            document.getElementById('quickColorPills').innerHTML = '';
+        }
 
         quickAddModal.classList.remove('hidden');
+
+        // AUTO-SELECT
+        if (volumes && volumes.length === 1) selectQuickVolume(volumes[0]);
+        if (units && units.length === 1) selectQuickUnit(units[0]);
+        if (colors && colors.length === 1) selectQuickColor(colors[0]);
     }
 
     function closeQuickAdd() { quickAddModal.classList.add('hidden'); }
 
-    // MULTI-SELECT VOLUME FEATURE (QUICK ADD MODAL)
+    function selectQuickColor(color) {
+        currentSelectedColor = color;
+        document.getElementById('quickColorPills').querySelectorAll('button').forEach(btn => btn.className = "border border-[var(--border-color)] bg-[var(--bg-base)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none");
+        document.getElementById('qcolor-' + color.replace(/\s+/g, '-')).className = "border-2 border-[var(--accent-green)] text-[var(--accent-green)] bg-[var(--accent-green)]/10 rounded-lg px-4 py-2 text-[10px] font-black uppercase transition focus:outline-none";
+    }
+
     function selectQuickVolume(vol) {
         const btn = document.getElementById('qvol-' + vol.replace(/\s+/g,'-'));
         const idx = currentSelectedVolumes.indexOf(vol);
 
         if (idx > -1) {
-            // Remove it
             currentSelectedVolumes.splice(idx, 1);
             btn.className = "border border-[var(--border-color)] bg-[var(--bg-base)] text-[var(--text-muted)] rounded-lg px-4 py-2 text-[10px] font-bold uppercase transition hover:border-[var(--accent-green)] focus:outline-none";
         } else {
-            // Add it
             currentSelectedVolumes.push(vol);
             btn.className = "border-2 border-[var(--accent-green)] text-[var(--accent-green)] bg-[var(--accent-green)]/10 rounded-lg px-4 py-2 text-[10px] font-black uppercase transition focus:outline-none";
         }
@@ -776,18 +821,23 @@
             return;
         }
 
-        // Loop through all selected volumes and add them to cart
+        const colorContainer = document.getElementById('quickColorContainer');
+        if (!colorContainer.classList.contains('hidden') && currentSelectedColor === "") {
+            alert(currentLang === 'en' ? "Please select a Variant/Color." : "الرجاء اختيار النوع/اللون.");
+            return;
+        }
+
         currentSelectedVolumes.forEach(vol => {
-            processCartAdd(nameEn, nameAr, vol, currentSelectedUnit, qty);
+            processCartAdd(nameEn, nameAr, vol, currentSelectedUnit, currentSelectedColor, qty);
         });
 
         closeQuickAdd();
     }
 
-    function processCartAdd(nameEn, nameAr, vol, unit, qty) {
-        let idx = shoppingCart.findIndex(item => item.nameEn === nameEn && item.volume === vol && item.unit === unit);
+    function processCartAdd(nameEn, nameAr, vol, unit, color, qty) {
+        let idx = shoppingCart.findIndex(item => item.nameEn === nameEn && item.volume === vol && item.unit === unit && item.color === color);
         if (idx > -1) { shoppingCart[idx].qty += qty; }
-        else { shoppingCart.push({ nameEn, nameAr, volume: vol, unit, qty }); }
+        else { shoppingCart.push({ nameEn, nameAr, volume: vol, unit: unit, color: color, qty }); }
         localStorage.setItem('growGreenCart', JSON.stringify(shoppingCart));
         updateCartDisplay();
     }
@@ -813,7 +863,8 @@
             const itemName = currentLang === 'en' ? item.nameEn : item.nameAr;
             const qtyText = currentLang === 'en' ? "Quantity" : "الكمية";
             const volText = currentLang === 'en' ? "Volume" : "الحجم";
-            message += `${index + 1}. *${itemName}*\n   ${qtyText}: ${item.qty} ${item.unit}\n   ${volText}: ${item.volume}\n\n`;
+            const variantText = item.color ? (currentLang === 'en' ? `\n   Variant: ${item.color}` : `\n   النوع: ${item.color}`) : '';
+            message += `${index + 1}. *${itemName}*\n   ${qtyText}: ${item.qty} ${item.unit}\n   ${volText}: ${item.volume}${variantText}\n\n`;
         });
 
         message += currentLang === 'en' ? "Please review and confirm. Thank you!" : "يرجى المراجعة والتأكيد. شكراً لكم!";

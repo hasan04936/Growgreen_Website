@@ -29,6 +29,13 @@ class Unit(models.Model):
     def __str__(self):
         return self.name_en
 
+class Color(models.Model):
+    name_en = models.CharField(max_length=100)
+    name_ar = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return self.name_en
+
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
@@ -50,6 +57,7 @@ class Product(models.Model):
     # The admin can select ONLY the specific volumes and units this product comes in.
     available_volumes = models.ManyToManyField(Volume, blank=True)
     available_units = models.ManyToManyField(Unit, blank=True)
+    available_colors = models.ManyToManyField(Color, blank=True)
 
     def __str__(self):
         return self.name_en

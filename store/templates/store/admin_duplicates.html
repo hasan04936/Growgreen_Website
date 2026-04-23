@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Grow Green | Resolve Duplicates</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #071510; color: #f4efe4; }
+        .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background-color: #1a3327; border-radius: 10px; }
+        .gold-btn { background: linear-gradient(135deg, #1e8f62, #145a3f); color: #ffffff; transition: all 0.3s; }
+        .gold-btn:hover { box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3); transform: translateY(-1px); }
+    </style>
+</head>
+<body class="p-6 md:p-10 flex flex-col h-screen">
+
+    <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 shrink-0 gap-4">
+        <div>
+            <h2 class="text-2xl font-black uppercase tracking-widest text-white">Database Scanner</h2>
+            <p class="text-sm text-[#7f988b] mt-1">Review, merge, or separate duplicate products.</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+            <form action="{% url 'admin_bulk_merge_all' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="gold-btn px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest transition flex items-center gap-2" onclick="return confirm('DANGER: This will scan the entire database, keep the oldest record in every group as the Master, and automatically merge/delete all other duplicates. Proceed?')">
+                    ⚡ Auto-Merge All
+                </button>
+            </form>
+            <a href="{% url 'custom_admin_dashboard' %}" class="bg-[#10251d] border border-[#1a3327] text-[#7f988b] hover:text-white px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest transition">Back to Dashboard</a>
+        </div>
+    </div>
+
+    {% if messages %}
+        <div class="mb-6 shrink-0">
+            {% for message in messages %}
+            <div class="p-4 rounded-xl {% if message.tags == 'error' %}bg-red-900/20 text-red-400 border border-red-900/50{% else %}bg-[#1e8f62]/20 text-[#31c488] border border-[#1e8f62]/30{% endif %} font-bold text-sm">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="flex-1 overflow-y-auto custom-scroll pr-4">
+        {% if duplicates_list %}
+            <div class="space-y-8">
+                {% for dup_group in duplicates_list %}
+                <div class="bg-[#10251d] border border-[#1a3327] rounded-3xl p-6 shadow-xl duplicate-group">
+                    <div class="flex justify-between items-start border-b border-[#1a3327] pb-4 mb-6">
+                        <div>
+                            <span class="bg-red-500/10 text-red-400 px-3 py-1 rounded-md text-[10px] font-black uppercase tracking-widest mb-2 inline-block">Duplicate Found</span>
+                            <h3 class="text-xl font-bold uppercase text-white">{{ dup_group.name }}</h3>
+                            <p class="text-xs text-[#7f988b] mt-1">Select the Master record below and check which duplicates to merge into it.</p>
+                        </div>
+
+                        <button onclick="this.closest('.duplicate-group').style.display='none'" class="text-[10px] bg-[#1a3327] text-gray-400 hover:text-white px-4 py-2 rounded-lg uppercase font-bold tracking-widest transition border border-[#31c488]/20 hover:border-[#31c488]">
+                            ✕ Ignore Group
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                        {% for product in dup_group.products %}
+                        <div class="bg-[#071510] border border-[#1a3327] rounded-2xl p-5 relative flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <p class="text-[10px] text-[#7f988b] font-bold uppercase tracking-widest">Record ID: #{{ product.id }}</p>
+
+                                    <button type="button" onclick="document.getElementById('rename-form-{{ product.id }}').classList.toggle('hidden')" class="text-[10px] text-[#31c488] hover:text-white font-bold uppercase tracking-wider underline">
+                                        Rename
+                                    </button>
+                                </div>
+
+                                <div id="rename-form-{{ product.id }}" class="hidden mb-4 bg-[#10251d] p-3 rounded-xl border border-[#1a3327]">
+                                    <form action="{% url 'admin_quick_rename' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="product_id" value="{{ product.id }}">
+
+                                        <label class="block text-[8px] text-[#7f988b] uppercase mb-1">Change English Name</label>
+                                        <input type="text" name="new_name_en" value="{{ product.name_en }}" class="w-full bg-[#071510] border border-[#1a3327] text-white px-2 py-1.5 rounded text-xs outline-none focus:border-[#1e8f62] mb-2" required>
+
+                                        <label class="block text-[8px] text-[#7f988b] uppercase mb-1">Change Arabic Name</label>
+                                        <input type="text" name="new_name_ar" value="{{ product.name_ar }}" class="w-full bg-[#071510] border border-[#1a3327] text-white px-2 py-1.5 rounded text-xs outline-none focus:border-[#1e8f62] mb-2" dir="rtl" required>
+
+                                        <button type="submit" class="w-full bg-[#1e8f62] text-white text-[9px] font-bold uppercase tracking-widest py-2 rounded mt-1 hover:bg-[#159a67] transition">Save & Separate</button>
+                                    </form>
+                                </div>
+
+                                <div class="space-y-3 mb-2">
+                                    <div>
+                                        <p class="text-[9px] text-[#7f988b] uppercase mb-1">Volumes</p>
+                                        <div class="flex flex-wrap gap-1">
+                                            {% for vol in product.available_volumes.all %}
+                                            <span class="bg-[#1a3327] text-white text-[10px] px-2 py-1 rounded">{{ vol.name_en }}</span>
+                                            {% empty %}
+                                            <span class="text-[10px] text-gray-600">None</span>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <form action="{% url 'admin_merge_duplicates' %}" method="POST" class="mt-auto">
+                                {% csrf_token %}
+                                <input type="hidden" name="master_id" value="{{ product.id }}">
+
+                                <div class="mt-4 border-t border-[#1a3327] pt-4 mb-4">
+                                    <p class="text-[9px] text-[#31c488] font-bold uppercase tracking-widest mb-3">Select items to merge into this:</p>
+                                    <div class="space-y-2">
+                                        {% for inner_prod in dup_group.products %}
+                                            {% if inner_prod.id != product.id %}
+                                            <label class="flex items-center gap-3 cursor-pointer group">
+                                                <input type="checkbox" name="duplicate_ids" value="{{ inner_prod.id }}" checked class="w-4 h-4 rounded border-[#1a3327] bg-[#071510] text-[#1e8f62] focus:ring-[#1e8f62] cursor-pointer">
+                                                <span class="text-[10px] text-[#7f988b] group-hover:text-white transition uppercase font-bold tracking-wider">Record #{{ inner_prod.id }}</span>
+                                            </label>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="w-full gold-btn py-3 rounded-xl font-bold uppercase tracking-widest text-[10px]" onclick="return confirm('Are you sure you want to merge the selected records into this master?')">
+                                    Merge Selected Here
+                                </button>
+                            </form>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="h-full flex flex-col items-center justify-center bg-[#10251d] border border-[#1a3327] rounded-3xl p-10 opacity-70">
+                <svg class="w-20 h-20 text-[#1e8f62] mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <h3 class="text-xl font-bold uppercase tracking-widest text-white mb-2">Database is Clean</h3>
+                <p class="text-sm text-[#7f988b]">No duplicate products were found in your inventory.</p>
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>

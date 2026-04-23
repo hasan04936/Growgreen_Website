@@ -18,6 +18,18 @@ urlpatterns = [
     path('dashboard/attributes/', views.admin_attributes, name='admin_attributes'),
     path('dashboard/banners/', views.admin_banners, name='admin_banners'),
     path('dashboard/banners/delete/<int:banner_id>/', views.delete_banner, name='delete_banner'),
+    path('dashboard/excel-review/', views.admin_excel_review, name='admin_excel_review'),
+    path('dashboard/bulk-images/', views.admin_bulk_image_upload, name='admin_bulk_image_upload'),
+    path('dashboard/duplicates/', views.admin_find_duplicates, name='admin_find_duplicates'),
+    path('dashboard/duplicates/merge/', views.admin_merge_duplicates, name='admin_merge_duplicates'),
+    path('dashboard/offer-generator/', views.admin_offer_generator, name='admin_offer_generator'),
+    path('dashboard/duplicates/rename/', views.admin_quick_rename, name='admin_quick_rename'),
+    path('dashboard/duplicates/bulk-merge/', views.admin_bulk_merge_all, name='admin_bulk_merge_all'),
+    path('dashboard/system/factory-reset/', views.admin_factory_reset, name='admin_factory_reset'),
+    path('dashboard/system/', views.admin_system_settings, name='admin_system_settings'),
+    path('dashboard/system/backup/', views.admin_database_backup, name='admin_database_backup'),
+    path('dashboard/system/restore/', views.admin_database_restore, name='admin_database_restore'),
+    path('dashboard/system/factory-reset/', views.admin_factory_reset, name='admin_factory_reset'),
 ]
 
 # This is required to show uploaded images during development

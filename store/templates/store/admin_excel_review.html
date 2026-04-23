@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Grow Green | Review Missing Fields</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Poppins', sans-serif; background-color: #0A0A0A; color: #FFFFFF; }</style>
+</head>
+<body class="p-10">
+    <div class="max-w-4xl mx-auto bg-[#111] border border-[#222] rounded-2xl p-8 shadow-2xl">
+        <h2 class="text-xl font-bold uppercase tracking-widest text-[#D4AF37] mb-2">Review Blank Fields</h2>
+        <p class="text-sm text-gray-400 mb-8">The following products were imported but are missing Volumes or Units. You can fill them in now (comma separated) or leave them blank.</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="space-y-4 max-h-[60vh] overflow-y-auto pr-4 custom-scroll">
+                {% for product in products %}
+                <div class="p-4 bg-[#1A1A1A] border border-[#333] rounded-lg flex items-center justify-between gap-4">
+                    <div class="flex-1">
+                        <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">{{ product.category.name_en }}</p>
+                        <h4 class="font-bold text-white uppercase">{{ product.name_en }}</h4>
+                    </div>
+
+                    <div class="w-48">
+                        <label class="text-[9px] text-gray-400 block mb-1">Volumes (Blank allowed)</label>
+                        <input type="text" name="vol_{{ product.id }}" class="w-full bg-[#222] border border-[#444] rounded px-3 py-2 text-xs text-white outline-none focus:border-[#D4AF37]" placeholder="e.g. 500ml, 1L">
+                    </div>
+
+                    <div class="w-48">
+                        <label class="text-[9px] text-gray-400 block mb-1">Units (Blank allowed)</label>
+                        <input type="text" name="unit_{{ product.id }}" class="w-full bg-[#222] border border-[#444] rounded px-3 py-2 text-xs text-white outline-none focus:border-[#D4AF37]" placeholder="e.g. PCS, DOZ">
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-[#333] flex justify-end">
+                <button type="submit" class="bg-gradient-to-r from-[#E6C875] to-[#D4AF37] text-black font-bold uppercase tracking-widest text-xs px-8 py-3 rounded hover:scale-105 transition">Save & Continue</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

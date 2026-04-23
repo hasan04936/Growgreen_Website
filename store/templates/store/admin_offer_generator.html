@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grow Green | Pro Flyer Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&family=Cairo:wght@400;600;800;900&family=Roboto:wght@400;700;900&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(212, 175, 55, 0.12), transparent 32%),
+                radial-gradient(circle at bottom right, rgba(30, 143, 98, 0.16), transparent 28%),
+                #0a0a0a;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background-color: #333;
+            border-radius: 10px;
+        }
+
+        .custom-scroll:hover::-webkit-scrollbar-thumb {
+            background-color: #D4AF37;
+        }
+
+        .gold-btn {
+            background: linear-gradient(135deg, #ecd79b, #d4af37 45%, #b88718);
+            color: #000;
+            transition: all 0.25s ease;
+        }
+
+        .gold-btn:hover {
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .dark-btn {
+            background: linear-gradient(180deg, #1c1c1c, #121212);
+            border: 1px solid #383838;
+            color: #fff;
+            transition: all 0.25s ease;
+        }
+
+        .dark-btn:hover {
+            border-color: #D4AF37;
+            color: #D4AF37;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            background-color: #161616;
+            border: 1px solid #333;
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            outline: none;
+            font-size: 0.75rem;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.25);
+        }
+
+        .color-picker {
+            width: 100%;
+            height: 42px;
+            padding: 4px;
+            background-color: #161616;
+            border: 1px solid #333;
+            border-radius: 0.75rem;
+            cursor: pointer;
+        }
+
+        .range-slider {
+            width: 100%;
+            accent-color: #D4AF37;
+        }
+
+        .studio-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+            border: 1px solid #2c2c2c;
+            border-radius: 1rem;
+        }
+
+        #pdf-workspace {
+            background:
+                linear-gradient(180deg, rgba(255,255,255,0.03), transparent 30%),
+                #121212;
+        }
+
+        :root {
+            --fs-banner: 36px;
+            --fs-header: 18px;
+            --fs-footer: 11px;
+            --fs-price: 60px;
+            --fs-old-price: 18px;
+            --fs-title-en: 14px;
+            --fs-title-ar: 18px;
+            --fs-tags: 12px;
+            --fs-weight: 20px;
+            --fs-badge: 16px;
+
+            --theme-color: #1e8f62;
+            --theme-dark: #0d2d59;
+            --banner-text-color: #ffffff;
+            --hf-text-color: #ffffff;
+            --card-text-color: #132f69;
+            --price-color: #d90511;
+            --surface-color: #ffffff;
+            --gold-start: #f3d07a;
+            --gold-end: #b47a12;
+            --flyer-font: 'Poppins';
+
+            --page-padding-x: 20px;
+            --page-padding-top: 20px;
+            --page-padding-bottom: 64px;
+            --grid-cols: 3;
+            --grid-gap-x: 18px;
+            --grid-gap-y: 18px;
+            --card-height: 320px;
+            --card-radius: 28px;
+            --card-shadow: 0 18px 40px rgba(13, 20, 40, 0.16);
+            --card-border: 1px solid rgba(212, 175, 55, 0.16);
+            --weight-badge-width: 118px;
+            --weight-badge-height: 72px;
+            --price-panel-width: 48%;
+            --price-panel-height: 112px;
+            --price-panel-top: 82px;
+            --weight-top: 0px;
+            --weight-right: 0px;
+            --image-scale: 1;
+            --image-x: 0px;
+            --image-y: 0px;
+            --title-block-bottom: 70px;
+            --wave-height: 66px;
+            --header-height: 64px;
+            --footer-height: 48px;
+            --banner-height: 40%;
+            --preview-zoom: 0.78;
+        }
+
+        .a4-page {
+            width: 210mm;
+            height: 297mm;
+            background-color: white;
+            margin: 0 auto 2rem auto;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            font-family: var(--flyer-font), 'Cairo', sans-serif;
+            transform: scale(var(--preview-zoom));
+            transform-origin: top center;
+        }
+
+        .page-shell {
+            width: calc(210mm * var(--preview-zoom));
+            height: calc(297mm * var(--preview-zoom));
+            margin-bottom: 1rem;
+        }
+
+        .line-clamp-1 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
+
+        .flyer-card-slot {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .flyer-card-slot .flyer-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 0;
+        }
+
+        .flyer-card {
+            position: relative;
+            height: var(--card-height);
+            border-radius: var(--card-radius);
+            background:
+                radial-gradient(circle at 80% 16%, rgba(255,255,255,0.65), transparent 22%),
+                linear-gradient(135deg, #ffffff 0%, #fcfcfc 55%, #f0f2f7 100%);
+            box-shadow: var(--card-shadow);
+            border: var(--card-border);
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .flyer-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.45);
+            pointer-events: none;
+        }
+
+        .weight-badge {
+            position: absolute;
+            top: var(--weight-top);
+            right: var(--weight-right);
+            width: var(--weight-badge-width);
+            height: var(--weight-badge-height);
+            background: linear-gradient(135deg, var(--gold-start), var(--gold-end));
+            color: white;
+            border-bottom-left-radius: 22px;
+            border-top-right-radius: calc(var(--card-radius) - 2px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--fs-weight);
+            font-weight: 900;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+            z-index: 4;
+        }
+
+        .weight-badge::before {
+            content: "";
+            position: absolute;
+            left: -14px;
+            top: 0;
+            width: 28px;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(255,255,255,0.06));
+            clip-path: polygon(100% 0, 100% 100%, 0 0);
+            opacity: 0.6;
+        }
+
+        .price-panel {
+            position: absolute;
+            left: 0;
+            top: var(--price-panel-top);
+            width: var(--price-panel-width);
+            height: var(--price-panel-height);
+            background: linear-gradient(180deg, #e70c18 0%, #be0710 100%);
+            border-top-right-radius: 40px;
+            border-bottom-right-radius: 40px;
+            padding: 18px 16px 12px 22px;
+            color: white;
+            z-index: 3;
+            box-shadow: 0 12px 24px rgba(217, 5, 17, 0.28);
+        }
+
+        .price-panel .currency {
+            font-size: calc(var(--fs-price) * 0.35);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .price-panel .price-value {
+            font-size: var(--fs-price);
+            font-weight: 900;
+            line-height: 0.92;
+            letter-spacing: -2px;
+        }
+
+        .top-accent-line {
+            position: absolute;
+            left: 18px;
+            top: 78px;
+            width: 76px;
+            height: 3px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--gold-start), var(--gold-end));
+            z-index: 2;
+        }
+
+        .old-price {
+            position: absolute;
+            left: 22px;
+            top: calc(var(--price-panel-top) + var(--price-panel-height) + 16px);
+            font-size: var(--fs-old-price);
+            color: rgba(73, 73, 73, 0.65);
+            z-index: 2;
+        }
+
+        .old-price::after {
+            content: "";
+            position: absolute;
+            left: -4px;
+            right: -4px;
+            top: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #e11d48, transparent);
+            transform: rotate(-7deg);
+        }
+
+        .product-visual {
+            position: absolute;
+            right: 8px;
+            top: 34px;
+            width: 52%;
+            height: 74%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .product-visual img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transform:
+                translate(var(--image-x), var(--image-y))
+                scale(var(--image-scale));
+            filter: drop-shadow(0 16px 18px rgba(0,0,0,0.18));
+        }
+
+        .product-placeholder {
+            width: 92%;
+            height: 80%;
+            border-radius: 22px;
+            background: linear-gradient(180deg, #eef2f7, #dfe7f2);
+            border: 1px dashed rgba(19, 47, 105, 0.25);
+            color: rgba(19, 47, 105, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .title-block {
+            position: absolute;
+            left: 22px;
+            right: 144px;
+            bottom: var(--title-block-bottom);
+            z-index: 3;
+        }
+
+        .title-en {
+            color: var(--card-text-color);
+            font-size: var(--fs-title-en);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.06;
+            letter-spacing: -0.2px;
+        }
+
+        .title-ar {
+            color: var(--card-text-color);
+            font-size: var(--fs-title-ar);
+            font-weight: 800;
+            line-height: 1.02;
+            margin-top: 2px;
+        }
+
+        .bottom-wave {
+            position: absolute;
+            inset-inline: 0;
+            bottom: 0;
+            height: calc(var(--wave-height) + 12px);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .bottom-badge {
+            position: absolute;
+            left: 18px;
+            bottom: 22px;
+            min-width: 110px;
+            height: 54px;
+            padding: 0 18px;
+            border-radius: 20px;
+            background: var(--theme-dark);
+            border: 3px solid var(--gold-start);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--fs-badge);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            z-index: 4;
+            box-shadow: 0 10px 18px rgba(13, 45, 89, 0.28);
+        }
+
+        .header-bar,
+        .footer-bar {
+            background: linear-gradient(135deg, var(--theme-color), var(--theme-dark));
+            color: var(--hf-text-color);
+        }
+
+        .stat-pill {
+            border: 1px solid rgba(212, 175, 55, 0.26);
+            background: rgba(212, 175, 55, 0.08);
+            color: #e7d39b;
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 0.35rem 0.65rem;
+        }
+
+        .toggle {
+            position: relative;
+            width: 42px;
+            height: 24px;
+            border-radius: 999px;
+            background: #2a2a2a;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .toggle::after {
+            content: "";
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 18px;
+            height: 18px;
+            border-radius: 999px;
+            background: white;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle[data-on="true"] {
+            background: linear-gradient(135deg, #ecd79b, #d4af37);
+        }
+
+        .toggle[data-on="true"]::after {
+            transform: translateX(18px);
+            background: #111;
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col md:flex-row">
+
+    {{ products_json|json_script:"products-data" }}
+
+    <aside class="w-full md:w-[520px] bg-[#101010]/95 backdrop-blur-xl border-e border-[#222] flex flex-col shrink-0 z-20 h-1/2 md:h-full">
+        <div class="p-5 border-b border-[#222] flex justify-between items-start gap-3 shrink-0">
+            <div>
+                <h2 class="text-base font-black uppercase tracking-[0.35em] text-[#D4AF37]">Flyer Studio Pro</h2>
+                <p class="text-[10px] text-gray-500 uppercase tracking-[0.28em] mt-1">Premium Product Card Engine</p>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="saveStudioState(true)" class="dark-btn px-3 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest">Save</button>
+                <a href="{% url 'custom_admin_dashboard' %}" class="text-xs text-red-400 hover:text-red-300 font-bold px-3 py-2 rounded-lg border border-red-900/30 bg-red-900/10">Exit</a>
+            </div>
+        </div>
+
+        <div class="px-5 pt-4 shrink-0 flex flex-wrap gap-2">
+            <span id="totalItemsStat" class="stat-pill">0 Items</span>
+            <span id="pageCountStat" class="stat-pill">0 Pages</span>
+            <span id="storageStat" class="stat-pill">Autosave Off</span>
+        </div>
+
+        <div class="flex-1 overflow-y-auto custom-scroll p-5 space-y-6">
+
+            <div class="studio-card p-4">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-[11px] font-black uppercase tracking-widest text-[#D4AF37]">1. Theme, Fonts & Preview</h3>
+                    <button onclick="applyPreset('classic')" class="text-[9px] text-gray-400 hover:text-white uppercase tracking-widest">Classic Reset</button>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3 mb-4">
+                    <div>
+                        <label class="block text-[8px] text-gray-500 uppercase mb-1">Theme</label>
+                        <input type="color" id="themeColor" value="#1e8f62" class="color-picker" onchange="updateDesign()">
+                    </div>
+                    <div>
+                        <label class="block text-[8px] text-gray-500 uppercase mb-1">Deep Blue</label>
+                        <input type="color" id="themeDarkColor" value="#0d2d59" class="color-picker" onchange="updateDesign()">
+                    </div>
+                    <div>
+                        <label class="block text-[8px] text-gray-500 uppercase mb-1">Price Red</label>
+                        <input type="color" id="priceColor" value="#d90511" class="color-picker" onchange="updateDesign()">
+                    </div>
+                    <div>
+                        <label class="block text-[8px] text-gray-500 uppercase mb-1">Card Text</label>
+                        <input type="color" id="cardTextColor" value="#132f69" class="color-picker" onchange="updateDesign()">
+                    </div>
+                    <div>
+                        <label class="block text-[8px] text-gray-500 uppercase mb-1">Gold Light</label>
+                        <input type="color" id="goldStartColor" value="#f3d07a" class="color-picker" onchange="updateDesign()">
+                    </div>
+                    <div>
+                        <label class="block text-[8px] text-gray-500 uppercase mb-1">Gold Dark</label>
+                        <input type="color" id="goldEndColor" value="#b47a12" class="color-picker" onchange="updateDesign()">
+                    </div>
+                    <div>
+                        <label class="block text-[8px] text-gray-500 uppercase mb-1">Banner Text</label>
+                        <input type="color" id="bannerTextColor" value="#ffffff" class="color-picker" onchange="updateDesign()">
+                    </div>
+                    <div>
+                        <label class="block text-[8px] text-gray-500 uppercase mb-1">Header/Footer</label>
+                        <input type="color" id="hfTextColor" value="#ffffff" class="color-picker" onchange="updateDesign()">
+                    </div>
+                    <div>
+                        <label class="block text-[8px] text-gray-500 uppercase mb-1">Font Family</label>
+                        <select id="fontFamily" class="form-select h-[42px] text-[10px]" onchange="updateDesign()">
+                            <option value="'Poppins'">Poppins</option>
+                            <option value="'Montserrat'">Montserrat</option>
+                            <option value="'Roboto'">Roboto</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Preview Zoom</span><span id="valPreviewZoom">78%</span></label>
+                        <input type="range" id="previewZoom" min="45" max="100" value="78" class="range-slider" oninput="updateTypography()">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Columns / Page</span><span id="valGridCols">3</span></label>
+                        <input type="range" id="gridCols" min="3" max="3" value="3" class="range-slider" oninput="updateTypography()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="studio-card p-4">
+                <h3 class="text-[11px] font-black uppercase tracking-widest text-[#D4AF37] mb-3">2. Typography Studio</h3>
+                <div class="grid grid-cols-2 gap-x-4 gap-y-3">
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Banner Title</span><span id="valBanner">36px</span></label>
+                        <input type="range" id="sizeBanner" min="16" max="84" value="36" class="range-slider" oninput="updateTypography()">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Header/Footer</span><span id="valHF">18px</span></label>
+                        <input type="range" id="sizeHF" min="8" max="28" value="18" class="range-slider" oninput="updateTypography()">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-red-400 font-bold uppercase flex justify-between"><span>Main Price</span><span id="valPrice">60px</span></label>
+                        <input type="range" id="sizePrice" min="28" max="90" value="60" class="range-slider" oninput="updateTypography()">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Old Price</span><span id="valOldPrice">18px</span></label>
+                        <input type="range" id="sizeOldPrice" min="8" max="30" value="18" class="range-slider" oninput="updateTypography()">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>English Name</span><span id="valEn">14px</span></label>
+                        <input type="range" id="sizeEn" min="9" max="24" value="14" class="range-slider" oninput="updateTypography()">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Arabic Name</span><span id="valAr">18px</span></label>
+                        <input type="range" id="sizeAr" min="10" max="30" value="18" class="range-slider" oninput="updateTypography()">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Weight Tag</span><span id="valWeight">20px</span></label>
+                        <input type="range" id="sizeWeight" min="10" max="34" value="20" class="range-slider" oninput="updateTypography()">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Bottom Badge</span><span id="valBadge">16px</span></label>
+                        <input type="range" id="sizeBadge" min="10" max="28" value="16" class="range-slider" oninput="updateTypography()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="studio-card p-4">
+                <h3 class="text-[11px] font-black uppercase tracking-widest text-[#D4AF37] mb-3">3. Layout & Card Geometry</h3>
+                <div class="grid grid-cols-2 gap-x-4 gap-y-3">
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Card Height</span><span id="valCardHeight">320px</span></label>
+                        <input type="range" id="cardHeight" min="220" max="420" value="320" class="range-slider" oninput="updateTypography()">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Card Radius</span><span id="valCardRadius">28px</span></label>
+                        <input type="range" id="cardRadius" min="10" max="42" value="28" class="range-slider" oninput="updateTypography()">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Grid Gap X</span><span id="valGapX">18px</span></label>
+                        <input type="range" id="gapX" min="8" max="34" value="18" class="range-slider" oninput="updateTypography()">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Grid Gap Y</span><span id="valGapY">18px</span></label>
+                        <input type="range" id="gapY" min="8" max="34" value="18" class="range-slider" oninput="updateTypography()">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Page Side Padding</span><span id="valPagePad">20px</span></label>
+                        <input type="range" id="pagePadding" min="8" max="34" value="20" class="range-slider" oninput="updateTypography()">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Wave Height</span><span id="valWaveHeight">66px</span></label>
+                        <input type="range" id="waveHeight" min="30" max="100" value="66" class="range-slider" oninput="updateTypography()">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Weight Badge Width</span><span id="valWeightWidth">118px</span></label>
+                        <input type="range" id="weightWidth" min="80" max="170" value="118" class="range-slider" oninput="updateTypography()">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Weight Badge Height</span><span id="valWeightHeight">72px</span></label>
+                        <input type="range" id="weightHeight" min="48" max="120" value="72" class="range-slider" oninput="updateTypography()">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Price Box Width</span><span id="valPricePanelWidth">48%</span></label>
+                        <input type="range" id="pricePanelWidth" min="28" max="60" value="48" class="range-slider" oninput="updateTypography()">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Price Box Height</span><span id="valPricePanelHeight">112px</span></label>
+                        <input type="range" id="pricePanelHeight" min="70" max="160" value="112" class="range-slider" oninput="updateTypography()">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Price Box Top</span><span id="valPriceTop">82px</span></label>
+                        <input type="range" id="pricePanelTop" min="30" max="150" value="82" class="range-slider" oninput="updateTypography()">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Title Bottom</span><span id="valTitleBottom">70px</span></label>
+                        <input type="range" id="titleBottom" min="35" max="130" value="70" class="range-slider" oninput="updateTypography()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="studio-card p-4">
+                <h3 class="text-[11px] font-black uppercase tracking-widest text-[#D4AF37] mb-3">4. Banner, Header & Footer</h3>
+
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-[9px] text-gray-500 uppercase mb-1">Banner Image (Page 1)</label>
+                        <input type="file" id="bannerInput" accept="image/*" class="form-input p-2" onchange="loadBanner(event)">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[9px] text-gray-500 uppercase mb-1">Banner Text</label>
+                            <input type="text" id="bannerText" value="RAMADAN KAREEM" class="form-input" onkeyup="updateDesign()" placeholder="Leave blank to hide">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] text-gray-500 uppercase mb-1">Banner Subtitle</label>
+                            <input type="text" id="bannerSubText" value="Premium savings on household products" class="form-input" onkeyup="updateDesign()">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[9px] text-[#D4AF37] font-bold uppercase mb-1">Valid Until</label>
+                            <input type="date" id="validUntil" class="form-input" onchange="updateDesign()">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] text-gray-500 uppercase mb-1">Date Prefix</label>
+                            <input type="text" id="validUntilLabel" value="VALID UNTIL" class="form-input" onkeyup="updateDesign()">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[9px] text-gray-500 uppercase mb-1">Top Header Text</label>
+                            <input type="text" id="headerText" value="GROW GREEN OFFERS" class="form-input" onkeyup="updateDesign()">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] text-gray-500 uppercase mb-1">Right Header Text</label>
+                            <input type="text" id="headerRightText" value="BIG SALE" class="form-input" onkeyup="updateDesign()">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-gray-500 uppercase mb-1">Footer Text</label>
+                        <input type="text" id="footerText" value="GROW GREEN TRADING CO. | شركة تنمو خضراء التجارية" class="form-input" onkeyup="updateDesign()">
+                    </div>
+                    <div class="grid grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Banner Height</span><span id="valBannerHeight">40%</span></label>
+                            <input type="range" id="bannerHeight" min="22" max="52" value="40" class="range-slider" oninput="updateTypography()">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Header Height</span><span id="valHeaderHeight">64px</span></label>
+                            <input type="range" id="headerHeight" min="40" max="90" value="64" class="range-slider" oninput="updateTypography()">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Footer Height</span><span id="valFooterHeight">48px</span></label>
+                            <input type="range" id="footerHeight" min="36" max="72" value="48" class="range-slider" oninput="updateTypography()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="studio-card p-4 relative">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-[11px] font-black uppercase tracking-widest text-[#D4AF37]">5. Search / Create Products</h3>
+                    <button onclick="toggleManualBuilder()" class="dark-btn px-3 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest">Manual Builder</button>
+                </div>
+
+                <div>
+                    <input type="text" id="productSearch" placeholder="Type product name..." class="form-input border-[#D4AF37]/50" onkeyup="searchProducts()">
+                    <div id="searchResults" class="absolute left-4 right-4 bg-[#181818] border border-[#444] rounded-xl mt-2 max-h-56 overflow-y-auto custom-scroll hidden z-50 shadow-2xl"></div>
+                </div>
+
+                <div id="addForm" class="hidden mt-4 pt-4 border-t border-[#333] space-y-4 relative">
+                    <button onclick="clearSelection()" class="absolute -top-2 right-0 text-gray-500 hover:text-red-500 text-xs font-bold">CANCEL</button>
+                    <h4 id="selName" class="font-bold text-sm text-white uppercase pe-10">Product Name</h4>
+                    <input type="hidden" id="selId">
+                    <input type="hidden" id="selNameAr">
+                    <input type="hidden" id="selImg">
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[9px] text-gray-500 uppercase mb-1">Product Name EN</label>
+                            <input type="text" id="manualNameEn" class="form-input" placeholder="EXTRA WHITE" onkeyup="syncManualPreview()">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] text-gray-500 uppercase mb-1">Product Name AR</label>
+                            <input type="text" id="manualNameAr" class="form-input" placeholder="اكسترا وايت" onkeyup="syncManualPreview()">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[9px] text-gray-500 uppercase mb-1">Weight / Top Right Tag</label>
+                            <input type="text" id="offerLabel" value="10 KG" class="form-input" placeholder="10 KG, 1 PCS, BUY 2">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] text-gray-500 uppercase mb-1">Bottom Badge</label>
+                            <input type="text" id="badgeText" value="KEES" class="form-input" placeholder="KEES">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[9px] text-gray-500 uppercase mb-1">Old Price (SAR)</label>
+                            <input type="number" step="0.01" id="oldPrice" class="form-input" placeholder="48.00">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] text-[#D4AF37] uppercase mb-1 font-bold">New Offer Price (SAR)</label>
+                            <input type="number" step="0.01" id="offerPrice" class="form-input border-[#D4AF37]" placeholder="45.00">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[9px] text-gray-500 uppercase mb-1">Volume / Size Label</label>
+                            <select id="selVolume" class="form-select py-2"></select>
+                        </div>
+                        <div>
+                            <label class="block text-[9px] text-gray-500 uppercase mb-1">Override Product Image</label>
+                            <input type="file" id="itemImageInput" accept="image/*" class="form-input p-2" onchange="loadProductImage(event)">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Image Scale</span><span id="valItemImageScale">100%</span></label>
+                            <input type="range" id="itemImageScale" min="60" max="140" value="100" class="range-slider" oninput="syncManualPreview()">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Image X</span><span id="valItemImageX">0px</span></label>
+                            <input type="range" id="itemImageX" min="-50" max="50" value="0" class="range-slider" oninput="syncManualPreview()">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] text-gray-400 uppercase flex justify-between"><span>Image Y</span><span id="valItemImageY">0px</span></label>
+                            <input type="range" id="itemImageY" min="-50" max="50" value="0" class="range-slider" oninput="syncManualPreview()">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="addToFlyer()" class="w-full gold-btn py-3 rounded-xl font-bold uppercase text-[10px] tracking-widest">Inject into Flyer</button>
+                        <button onclick="loadReferencePreset()" class="w-full dark-btn py-3 rounded-xl font-bold uppercase text-[10px] tracking-widest">Match Reference</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="studio-card p-4">
+                <div class="flex justify-between items-end border-b border-[#333] pb-2 mb-3">
+                    <h3 class="text-[11px] font-black uppercase tracking-widest text-[#D4AF37]">6. Manage Added Items</h3>
+                    <span id="itemCount" class="text-[9px] text-gray-500 font-bold bg-[#181818] px-2 py-1 rounded">0 Items</span>
+                </div>
+                <div id="addedItemsList" class="space-y-2 max-h-72 overflow-y-auto custom-scroll pr-2">
+                    <p class="text-xs text-gray-600 italic">No items added yet.</p>
+                </div>
+            </div>
+
+            <div class="studio-card p-4">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-[11px] font-black uppercase tracking-widest text-[#D4AF37]">7. Studio Tools</h3>
+                    <div class="flex items-center gap-2">
+                        <span class="text-[10px] text-gray-400 uppercase tracking-widest">Autosave</span>
+                        <button id="autosaveToggle" class="toggle" data-on="true" onclick="toggleAutosave()"></button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="exportStudioJSON()" class="dark-btn py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest">Export JSON</button>
+                    <label class="dark-btn py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest text-center cursor-pointer">
+                        Import JSON
+                        <input type="file" id="importJsonInput" accept=".json,application/json" class="hidden" onchange="importStudioJSON(event)">
+                    </label>
+                    <button onclick="applyPreset('reference')" class="gold-btn py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest">Reference Preset</button>
+                    <button onclick="resetStudio()" class="dark-btn py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest">Full Reset</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="p-5 border-t border-[#222] shrink-0 grid grid-cols-2 gap-3">
+            <button onclick="downloadPNG()" class="dark-btn py-4 rounded-xl font-black uppercase text-xs tracking-widest">Export PNG</button>
+            <button onclick="generatePDF()" class="bg-white text-black hover:bg-gray-200 transition py-4 rounded-xl font-black uppercase text-xs tracking-widest flex justify-center items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                Download PDF
+            </button>
+        </div>
+    </aside>
+
+    <main id="pdf-workspace" class="flex-1 overflow-y-auto custom-scroll p-4 md:p-10 flex flex-col items-center">
+        <div id="pdf-capture-area" class="w-full flex flex-col items-center"></div>
+    </main>
+
+    <script>
+        const STORAGE_KEY = 'growgreen_flyer_studio_pro_v2';
+        const FIRST_PAGE_ROWS = 3;
+        const OTHER_PAGE_ROWS = 5;
+        const FIXED_GRID_COLS = 3;
+
+        let autosaveEnabled = true;
+        let bannerImage = "";
+        let flyerItems = [];
+        let tempItemImage = "";
+        let selectedEditIndex = null;
+
+        function safeParseProducts() {
+            const node = document.getElementById('products-data');
+            if (!node) return [];
+            try {
+                const parsed = JSON.parse(node.textContent);
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (error) {
+                console.error("Data Load Error:", error);
+                return [];
+            }
+        }
+
+        const database = safeParseProducts();
+
+        function formatDate(dateStr) {
+            if (!dateStr) return "";
+            const options = { day: 'numeric', month: 'short', year: 'numeric' };
+            return new Date(dateStr).toLocaleDateString('en-GB', options).toUpperCase();
+        }
+
+        function updateDesign() {
+            const setRoot = (variable, value) => document.documentElement.style.setProperty(variable, value);
+
+            setRoot('--theme-color', document.getElementById('themeColor').value);
+            setRoot('--theme-dark', document.getElementById('themeDarkColor').value);
+            setRoot('--price-color', document.getElementById('priceColor').value);
+            setRoot('--card-text-color', document.getElementById('cardTextColor').value);
+            setRoot('--banner-text-color', document.getElementById('bannerTextColor').value);
+            setRoot('--hf-text-color', document.getElementById('hfTextColor').value);
+            setRoot('--gold-start', document.getElementById('goldStartColor').value);
+            setRoot('--gold-end', document.getElementById('goldEndColor').value);
+            setRoot('--flyer-font', document.getElementById('fontFamily').value);
+
+            updateTypography(false);
+        }
+
+        function syncRangeValue(sliderId, labelId, suffix = 'px', transform = (v) => v) {
+            const value = transform(document.getElementById(sliderId).value);
+            document.getElementById(labelId).innerText = `${value}${suffix}`;
+        }
+
+        function updateTypography(shouldPersist = true) {
+            const root = document.documentElement.style;
+            const value = (id) => document.getElementById(id).value;
+
+            document.getElementById('gridCols').value = FIXED_GRID_COLS;
+
+            syncRangeValue('sizeBanner', 'valBanner');
+            syncRangeValue('sizeHF', 'valHF');
+            syncRangeValue('sizePrice', 'valPrice');
+            syncRangeValue('sizeOldPrice', 'valOldPrice');
+            syncRangeValue('sizeEn', 'valEn');
+            syncRangeValue('sizeAr', 'valAr');
+            syncRangeValue('sizeWeight', 'valWeight');
+            syncRangeValue('sizeBadge', 'valBadge');
+            syncRangeValue('cardHeight', 'valCardHeight');
+            syncRangeValue('cardRadius', 'valCardRadius');
+            syncRangeValue('gapX', 'valGapX');
+            syncRangeValue('gapY', 'valGapY');
+            syncRangeValue('pagePadding', 'valPagePad');
+            syncRangeValue('waveHeight', 'valWaveHeight');
+            syncRangeValue('weightWidth', 'valWeightWidth');
+            syncRangeValue('weightHeight', 'valWeightHeight');
+            syncRangeValue('pricePanelHeight', 'valPricePanelHeight');
+            syncRangeValue('pricePanelTop', 'valPriceTop');
+            syncRangeValue('titleBottom', 'valTitleBottom');
+            syncRangeValue('headerHeight', 'valHeaderHeight');
+            syncRangeValue('footerHeight', 'valFooterHeight');
+
+            document.getElementById('valGridCols').innerText = FIXED_GRID_COLS;
+            document.getElementById('valPricePanelWidth').innerText = `${value('pricePanelWidth')}%`;
+            document.getElementById('valPreviewZoom').innerText = `${value('previewZoom')}%`;
+            document.getElementById('valBannerHeight').innerText = `${value('bannerHeight')}%`;
+            document.getElementById('valItemImageScale').innerText = `${value('itemImageScale')}%`;
+            document.getElementById('valItemImageX').innerText = `${value('itemImageX')}px`;
+            document.getElementById('valItemImageY').innerText = `${value('itemImageY')}px`;
+
+            root.setProperty('--fs-banner', `${value('sizeBanner')}px`);
+            root.setProperty('--fs-header', `${value('sizeHF')}px`);
+            root.setProperty('--fs-footer', `${Math.max(9, value('sizeHF') - 4)}px`);
+            root.setProperty('--fs-price', `${value('sizePrice')}px`);
+            root.setProperty('--fs-old-price', `${value('sizeOldPrice')}px`);
+            root.setProperty('--fs-title-en', `${value('sizeEn')}px`);
+            root.setProperty('--fs-title-ar', `${value('sizeAr')}px`);
+            root.setProperty('--fs-weight', `${value('sizeWeight')}px`);
+            root.setProperty('--fs-badge', `${value('sizeBadge')}px`);
+
+            root.setProperty('--grid-cols', FIXED_GRID_COLS);
+            root.setProperty('--grid-gap-x', `${value('gapX')}px`);
+            root.setProperty('--grid-gap-y', `${value('gapY')}px`);
+            root.setProperty('--card-height', `${value('cardHeight')}px`);
+            root.setProperty('--card-radius', `${value('cardRadius')}px`);
+            root.setProperty('--page-padding-x', `${value('pagePadding')}px`);
+            root.setProperty('--page-padding-top', `${value('pagePadding')}px`);
+            root.setProperty('--page-padding-bottom', `${parseInt(value('footerHeight'), 10) + 18}px`);
+            root.setProperty('--wave-height', `${value('waveHeight')}px`);
+            root.setProperty('--weight-badge-width', `${value('weightWidth')}px`);
+            root.setProperty('--weight-badge-height', `${value('weightHeight')}px`);
+            root.setProperty('--price-panel-width', `${value('pricePanelWidth')}%`);
+            root.setProperty('--price-panel-height', `${value('pricePanelHeight')}px`);
+            root.setProperty('--price-panel-top', `${value('pricePanelTop')}px`);
+            root.setProperty('--title-block-bottom', `${value('titleBottom')}px`);
+            root.setProperty('--header-height', `${value('headerHeight')}px`);
+            root.setProperty('--footer-height', `${value('footerHeight')}px`);
+            root.setProperty('--banner-height', `${value('bannerHeight')}%`);
+            root.setProperty('--preview-zoom', `${value('previewZoom') / 100}`);
+
+            renderPages();
+            if (shouldPersist) saveStudioState();
+        }
+
+        function loadBanner(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                bannerImage = e.target.result;
+                renderPages();
+                saveStudioState();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function loadProductImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                tempItemImage = e.target.result;
+                document.getElementById('selImg').value = tempItemImage;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function searchProducts() {
+            const query = document.getElementById('productSearch').value.toLowerCase().trim();
+            const resultsBox = document.getElementById('searchResults');
+            resultsBox.innerHTML = '';
+
+            if (query.length < 2 || database.length === 0) {
+                resultsBox.classList.add('hidden');
+                return;
+            }
+
+            const matches = database.filter((p) => {
+                const en = (p.name_en || '').toLowerCase();
+                const ar = p.name_ar || '';
+                const sku = (p.sku || '').toLowerCase();
+                return en.includes(query) || ar.includes(query) || sku.includes(query);
+            }).slice(0, 12);
+
+            if (!matches.length) {
+                resultsBox.innerHTML = '<div class="p-3 text-xs text-gray-500">No products found.</div>';
+                resultsBox.classList.remove('hidden');
+                return;
+            }
+
+            resultsBox.innerHTML = matches.map((p) => `
+                <div onclick="selectProduct(${p.id})" class="p-3 hover:bg-[#242424] cursor-pointer border-b border-[#262626] flex items-center gap-3 transition">
+                    ${p.image_url ? `<img src="${p.image_url}" class="w-10 h-10 rounded-lg bg-white object-contain p-1">` : `<div class="w-10 h-10 rounded-lg bg-gray-700"></div>`}
+                    <div class="flex-1 min-w-0">
+                        <h5 class="text-xs font-bold text-white truncate">${escapeHTML(p.name_en || '')}</h5>
+                        <p class="text-[10px] text-gray-500 truncate">${escapeHTML(p.name_ar || '')}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            resultsBox.classList.remove('hidden');
+        }
+
+        function toggleManualBuilder() {
+            const form = document.getElementById('addForm');
+            form.classList.toggle('hidden');
+            if (!form.classList.contains('hidden')) {
+                prepareManualForm();
+            }
+        }
+
+        function prepareManualForm() {
+            document.getElementById('selId').value = '';
+            document.getElementById('selName').innerText = 'Manual Product Builder';
+            if (!document.getElementById('manualNameEn').value) document.getElementById('manualNameEn').value = 'EXTRA WHITE';
+            if (!document.getElementById('manualNameAr').value) document.getElementById('manualNameAr').value = 'اكسترا وايت';
+            if (!document.getElementById('offerLabel').value) document.getElementById('offerLabel').value = '10 KG';
+            if (!document.getElementById('badgeText').value) document.getElementById('badgeText').value = 'KEES';
+            document.getElementById('selVolume').innerHTML = ['10 KG', '5 KG', '3 KG', '1 PCS', '500 ML'].map((item) => `<option value="${item}">${item}</option>`).join('');
+            syncManualPreview();
+        }
+
+        function syncManualPreview() {
+            document.getElementById('valItemImageScale').innerText = `${document.getElementById('itemImageScale').value}%`;
+            document.getElementById('valItemImageX').innerText = `${document.getElementById('itemImageX').value}px`;
+            document.getElementById('valItemImageY').innerText = `${document.getElementById('itemImageY').value}px`;
+        }
+
+        function selectProduct(id) {
+            const p = database.find((item) => item.id === id);
+            if (!p) return;
+
+            document.getElementById('searchResults').classList.add('hidden');
+            document.getElementById('productSearch').value = '';
+            document.getElementById('addForm').classList.remove('hidden');
+            document.getElementById('selId').value = p.id;
+            document.getElementById('selName').innerText = p.name_en || 'Selected Product';
+            document.getElementById('selNameAr').value = p.name_ar || '';
+            document.getElementById('selImg').value = p.image_url || '';
+            document.getElementById('manualNameEn').value = p.name_en || '';
+            document.getElementById('manualNameAr').value = p.name_ar || '';
+            document.getElementById('offerLabel').value = '10 KG';
+            document.getElementById('badgeText').value = 'KEES';
+            document.getElementById('oldPrice').value = '';
+            document.getElementById('offerPrice').value = '';
+            document.getElementById('itemImageScale').value = 100;
+            document.getElementById('itemImageX').value = 0;
+            document.getElementById('itemImageY').value = 0;
+            tempItemImage = '';
+
+            const volumes = Array.isArray(p.volumes) && p.volumes.length ? p.volumes : ['10 KG', '5 KG', '1 PCS'];
+            document.getElementById('selVolume').innerHTML = volumes.map((v) => `<option value="${escapeHTML(v)}">${escapeHTML(v)}</option>`).join('');
+            syncManualPreview();
+        }
+
+        function clearSelection() {
+            document.getElementById('addForm').classList.add('hidden');
+            document.getElementById('productSearch').value = '';
+            tempItemImage = '';
+            selectedEditIndex = null;
+        }
+
+        function readItemForm() {
+            const newP = document.getElementById('offerPrice').value;
+            if (!newP) {
+                alert('Please enter an Offer Price.');
+                return null;
+            }
+
+            const offerLabel = document.getElementById('offerLabel').value.trim();
+            const volumeSelect = document.getElementById('selVolume');
+            const volume = volumeSelect && volumeSelect.value ? volumeSelect.value.trim() : '';
+
+            return {
+                id: document.getElementById('selId').value || `manual-${Date.now()}`,
+                name_en: document.getElementById('manualNameEn').value.trim() || document.getElementById('selName').innerText || 'PRODUCT NAME',
+                name_ar: document.getElementById('manualNameAr').value.trim() || document.getElementById('selNameAr').value || 'اسم المنتج',
+                image: document.getElementById('selImg').value || tempItemImage || '',
+                old_price: document.getElementById('oldPrice').value ? parseFloat(document.getElementById('oldPrice').value).toFixed(2) : '',
+                new_price: parseFloat(newP).toFixed(2),
+                offer_label: offerLabel || volume || '10 KG',
+                vol: volume,
+                badge_text: document.getElementById('badgeText').value.trim() || 'KEES',
+                image_scale: parseInt(document.getElementById('itemImageScale').value, 10) / 100,
+                image_x: parseInt(document.getElementById('itemImageX').value, 10),
+                image_y: parseInt(document.getElementById('itemImageY').value, 10)
+            };
+        }
+
+        function addToFlyer() {
+            const item = readItemForm();
+            if (!item) return;
+
+            if (selectedEditIndex !== null) {
+                flyerItems[selectedEditIndex] = item;
+                selectedEditIndex = null;
+            } else {
+                flyerItems.push(item);
+            }
+
+            clearSelection();
+            updateAddedItemsUI();
+            renderPages();
+            saveStudioState();
+        }
+
+        function editFlyerItem(index) {
+            const item = flyerItems[index];
+            if (!item) return;
+
+            selectedEditIndex = index;
+            document.getElementById('addForm').classList.remove('hidden');
+            document.getElementById('selName').innerText = `Editing: ${item.name_en}`;
+            document.getElementById('manualNameEn').value = item.name_en || '';
+            document.getElementById('manualNameAr').value = item.name_ar || '';
+            document.getElementById('selImg').value = item.image || '';
+            document.getElementById('offerLabel').value = item.offer_label || '';
+            document.getElementById('badgeText').value = item.badge_text || 'KEES';
+            document.getElementById('oldPrice').value = item.old_price || '';
+            document.getElementById('offerPrice').value = item.new_price || '';
+            document.getElementById('itemImageScale').value = Math.round((item.image_scale || 1) * 100);
+            document.getElementById('itemImageX').value = item.image_x || 0;
+            document.getElementById('itemImageY').value = item.image_y || 0;
+            document.getElementById('selVolume').innerHTML = [item.vol || ''].filter(Boolean).concat(['10 KG', '5 KG', '1 PCS']).map((v, idx, arr) => arr.indexOf(v) === idx ? `<option value="${escapeHTML(v)}">${escapeHTML(v)}</option>` : '').join('');
+            document.getElementById('selVolume').value = item.vol || '';
+            syncManualPreview();
+        }
+
+        function duplicateFlyerItem(index) {
+            const item = flyerItems[index];
+            if (!item) return;
+            flyerItems.splice(index + 1, 0, { ...item, id: `${item.id}-copy-${Date.now()}` });
+            updateAddedItemsUI();
+            renderPages();
+            saveStudioState();
+        }
+
+        function moveFlyerItem(index, direction) {
+            const newIndex = index + direction;
+            if (newIndex < 0 || newIndex >= flyerItems.length) return;
+            [flyerItems[index], flyerItems[newIndex]] = [flyerItems[newIndex], flyerItems[index]];
+            updateAddedItemsUI();
+            renderPages();
+            saveStudioState();
+        }
+
+        function removeFlyerItem(index) {
+            flyerItems.splice(index, 1);
+            updateAddedItemsUI();
+            renderPages();
+            saveStudioState();
+        }
+
+        function updateAddedItemsUI() {
+            const listDiv = document.getElementById('addedItemsList');
+            const count = flyerItems.length;
+            document.getElementById('itemCount').innerText = `${count} Items`;
+            document.getElementById('totalItemsStat').innerText = `${count} Items`;
+
+            if (!count) {
+                listDiv.innerHTML = '<p class="text-xs text-gray-600 italic">No items added yet.</p>';
+                return;
+            }
+
+            listDiv.innerHTML = flyerItems.map((item, index) => `
+                <div class="bg-[#141414] border border-[#2f2f2f] p-3 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shrink-0 overflow-hidden">
+                            ${item.image ? `<img src="${item.image}" class="max-w-full max-h-full object-contain p-1">` : `<span class="text-[8px] text-gray-400">IMG</span>`}
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-[11px] font-bold text-white truncate">${escapeHTML(item.name_en)}</p>
+                            <p class="text-[10px] text-[#D4AF37] font-bold">SAR ${item.new_price}</p>
+                            <p class="text-[9px] text-gray-500 truncate">${escapeHTML(item.offer_label || item.vol || '')}</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-5 gap-2 mt-3">
+                        <button onclick="moveFlyerItem(${index}, -1)" class="dark-btn h-9 rounded-lg text-[10px] font-bold">↑</button>
+                        <button onclick="moveFlyerItem(${index}, 1)" class="dark-btn h-9 rounded-lg text-[10px] font-bold">↓</button>
+                        <button onclick="editFlyerItem(${index})" class="dark-btn h-9 rounded-lg text-[10px] font-bold">Edit</button>
+                        <button onclick="duplicateFlyerItem(${index})" class="dark-btn h-9 rounded-lg text-[10px] font-bold">Copy</button>
+                        <button onclick="removeFlyerItem(${index})" class="bg-red-900/20 text-red-400 border border-red-900/40 h-9 rounded-lg text-[10px] font-bold">Del</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function escapeHTML(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function createWaveSVG() {
+            return `
+                <svg class="bottom-wave" viewBox="0 0 1000 140" preserveAspectRatio="none" aria-hidden="true">
+                    <path d="M0,116 C120,74 210,116 334,108 C472,98 621,36 736,42 C839,47 911,108 1000,94 L1000,140 L0,140 Z" fill="var(--gold-start)"></path>
+                    <path d="M0,110 C118,71 217,116 342,105 C486,93 617,28 744,38 C855,46 925,104 1000,88 L1000,140 L0,140 Z" fill="var(--theme-dark)"></path>
+                </svg>
+            `;
+        }
+
+        function createCardHTML(item, cardScale, slotHeight) {
+            const imageBlock = item.image
+                ? `<img src="${item.image}" alt="${escapeHTML(item.name_en)}" style="--image-scale:${item.image_scale || 1}; --image-x:${item.image_x || 0}px; --image-y:${item.image_y || 0}px;">`
+                : '<div class="product-placeholder">No Image</div>';
+
+            const oldPriceHtml = item.old_price ? `<div class="old-price">SAR ${escapeHTML(item.old_price)}</div>` : '';
+            const scaledWidth = 100 / Math.max(cardScale, 0.01);
+
+            return `
+                <div class="flyer-card-slot" style="height:${slotHeight}px;">
+                    <div class="flyer-card" style="width:${scaledWidth}%; transform:scale(${cardScale}); transform-origin:top left;">
+                        <div class="weight-badge">${escapeHTML(item.offer_label || item.vol || '10 KG')}</div>
+                        <div class="top-accent-line"></div>
+                        <div class="price-panel">
+                            <span class="currency">SAR</span>
+                            <div class="price-value">${escapeHTML(item.new_price)}</div>
+                        </div>
+                        ${oldPriceHtml}
+                        <div class="product-visual">${imageBlock}</div>
+                        <div class="title-block">
+                            <div class="title-en line-clamp-2">${escapeHTML(item.name_en)}</div>
+                            <div class="title-ar line-clamp-2" dir="rtl">${escapeHTML(item.name_ar)}</div>
+                        </div>
+                        ${createWaveSVG()}
+                        <div class="bottom-badge">${escapeHTML(item.badge_text || 'KEES')}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createHeader(pageNum) {
+            return `
+                <div class="header-bar w-full flex items-center justify-between px-8 shrink-0 shadow-md" style="height: var(--header-height);">
+                    <div>
+                        <h2 class="font-black uppercase tracking-widest leading-none" style="font-size: var(--fs-header); color: var(--hf-text-color);">${escapeHTML(document.getElementById('headerText').value)}</h2>
+                        <p class="text-[10px] uppercase tracking-[0.25em] mt-1 opacity-80">Page ${pageNum}</p>
+                    </div>
+                    <h2 class="font-black uppercase tracking-widest leading-none" style="font-size: calc(var(--fs-header) * 0.95); color: var(--hf-text-color);">${escapeHTML(document.getElementById('headerRightText').value)}</h2>
+                </div>
+            `;
+        }
+
+        function createFooter(pageNum, totalPages) {
+            return `
+                <div class="footer-bar absolute bottom-0 inset-x-0 flex items-center justify-between px-8 font-bold tracking-widest z-20 shadow-lg" style="height: var(--footer-height); font-size: var(--fs-footer);">
+                    <span>${escapeHTML(document.getElementById('footerText').value)}</span>
+                    <span>${pageNum}/${totalPages}</span>
+                </div>
+            `;
+        }
+
+        function renderPages() {
+            const captureArea = document.getElementById('pdf-capture-area');
+            captureArea.innerHTML = '';
+
+            const bannerText = document.getElementById('bannerText').value.trim();
+            const bannerSubText = document.getElementById('bannerSubText').value.trim();
+            const validDateRaw = document.getElementById('validUntil').value;
+            const validDateFormatted = formatDate(validDateRaw);
+            const dateLabel = document.getElementById('validUntilLabel').value.trim() || 'VALID UNTIL';
+
+            if (!flyerItems.length && !bannerImage) {
+                captureArea.innerHTML = `
+                    <div class="page-shell">
+                        <div class="a4-page flex items-center justify-center text-gray-300 font-black text-2xl uppercase tracking-widest bg-white">
+                            Premium Flyer Canvas
+                        </div>
+                    </div>
+                `;
+                document.getElementById('pageCountStat').innerText = '0 Pages';
+                return;
+            }
+
+            const itemsPerRow = FIXED_GRID_COLS;
+            const pagePadding = parseInt(document.getElementById('pagePadding').value, 10);
+            const gapY = parseInt(document.getElementById('gapY').value, 10);
+            const gapX = parseInt(document.getElementById('gapX').value, 10);
+            const headerHeight = parseInt(document.getElementById('headerHeight').value, 10);
+            const footerHeight = parseInt(document.getElementById('footerHeight').value, 10);
+            const bannerHeight = parseInt(document.getElementById('bannerHeight').value, 10);
+            const cardHeight = parseInt(document.getElementById('cardHeight').value, 10);
+
+            const pageHeightPx = 1122;
+            const firstPageTopArea = bannerImage ? (pageHeightPx * bannerHeight) / 100 : headerHeight;
+            const usableWithBanner = pageHeightPx - firstPageTopArea - footerHeight - (pagePadding * 2);
+            const usableStandard = pageHeightPx - headerHeight - footerHeight - (pagePadding * 2);
+
+            const firstPageRowHeight = Math.max(1, (usableWithBanner - (gapY * (FIRST_PAGE_ROWS - 1))) / FIRST_PAGE_ROWS);
+            const otherPageRowHeight = Math.max(1, (usableStandard - (gapY * (OTHER_PAGE_ROWS - 1))) / OTHER_PAGE_ROWS);
+
+            const firstPageScale = firstPageRowHeight / cardHeight;
+            const otherPageScale = otherPageRowHeight / cardHeight;
+
+            const itemsPerPage1 = FIRST_PAGE_ROWS * itemsPerRow;
+            const itemsPerOtherPages = OTHER_PAGE_ROWS * itemsPerRow;
+
+            const remainingItems = [...flyerItems];
+            const totalPages = Math.max(
+                1,
+                flyerItems.length === 0
+                    ? 1
+                    : Math.ceil(Math.max(0, flyerItems.length - itemsPerPage1) / Math.max(1, itemsPerOtherPages)) + 1
+            );
+
+            let pageNum = 1;
+
+            while (remainingItems.length > 0 || pageNum === 1) {
+                const isPage1 = pageNum === 1;
+                const limit = isPage1 ? itemsPerPage1 : itemsPerOtherPages;
+                const pageItems = remainingItems.splice(0, limit);
+                const rowCount = isPage1 ? FIRST_PAGE_ROWS : OTHER_PAGE_ROWS;
+                const slotHeight = isPage1 ? firstPageRowHeight : otherPageRowHeight;
+                const cardScale = isPage1 ? firstPageScale : otherPageScale;
+
+                let pageHtml = `<div class="page-shell"><div class="a4-page">`;
+
+                if (isPage1 && bannerImage) {
+                    pageHtml += `
+                        <div class="w-full relative bg-gray-100 overflow-hidden border-b-[8px] shrink-0" style="height: var(--banner-height); border-color: var(--theme-color)">
+                            <img src="${bannerImage}" class="w-full h-full object-cover">
+                            ${bannerText ? `
+                                <div class="absolute top-8 left-8 bg-black/45 backdrop-blur-md px-6 py-4 rounded-2xl border-l-[6px] shadow-2xl max-w-[75%]" style="border-color: var(--gold-start)">
+                                    <h1 class="font-black uppercase tracking-widest leading-none" style="font-size: var(--fs-banner); color: var(--banner-text-color);">${escapeHTML(bannerText)}</h1>
+                                    ${bannerSubText ? `<p class="mt-3 text-sm tracking-[0.2em] uppercase text-white/85">${escapeHTML(bannerSubText)}</p>` : ''}
+                                </div>
+                            ` : ''}
+                            ${validDateFormatted ? `
+                                <div class="absolute bottom-6 right-6 bg-black/80 text-white px-5 py-3 rounded-2xl font-bold shadow-2xl border border-white/10 uppercase tracking-widest backdrop-blur-md z-20">
+                                    <div class="text-[10px] opacity-80">${escapeHTML(dateLabel)}</div>
+                                    <div class="text-sm mt-1">${escapeHTML(validDateFormatted)}</div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                } else if (isPage1) {
+                    pageHtml += `
+                        <div class="w-full shrink-0 flex flex-col items-center justify-center px-8 text-center" style="height: var(--header-height); background: linear-gradient(135deg, var(--theme-color), var(--theme-dark));">
+                            <h1 class="font-black uppercase tracking-widest" style="font-size: var(--fs-banner); color: var(--banner-text-color);">${escapeHTML(bannerText || 'SPECIAL OFFERS')}</h1>
+                            ${bannerSubText ? `<p class="text-[10px] tracking-[0.28em] uppercase text-white/80 mt-2">${escapeHTML(bannerSubText)}</p>` : ''}
+                        </div>
+                    `;
+                } else {
+                    pageHtml += createHeader(pageNum);
+                }
+
+                pageHtml += `
+                    <div class="flex-1 content-start" style="
+                        padding-left: var(--page-padding-x);
+                        padding-right: var(--page-padding-x);
+                        padding-top: var(--page-padding-top);
+                        padding-bottom: var(--page-padding-bottom);
+                        display: grid;
+                        grid-template-columns: repeat(${FIXED_GRID_COLS}, minmax(0, 1fr));
+                        grid-template-rows: repeat(${rowCount}, ${slotHeight}px);
+                        gap: ${gapY}px ${gapX}px;
+                        align-content: start;
+                    ">
+                `;
+
+                pageItems.forEach((item) => {
+                    pageHtml += createCardHTML(item, cardScale, slotHeight);
+                });
+
+                pageHtml += `</div>`;
+                pageHtml += createFooter(pageNum, totalPages);
+                pageHtml += `</div></div>`;
+                captureArea.innerHTML += pageHtml;
+
+                if (!remainingItems.length) break;
+                pageNum += 1;
+            }
+
+            document.getElementById('pageCountStat').innerText = `${captureArea.children.length} Pages`;
+        }
+
+        function getStudioState() {
+            return {
+                form: {
+                    themeColor: document.getElementById('themeColor').value,
+                    themeDarkColor: document.getElementById('themeDarkColor').value,
+                    priceColor: document.getElementById('priceColor').value,
+                    cardTextColor: document.getElementById('cardTextColor').value,
+                    goldStartColor: document.getElementById('goldStartColor').value,
+                    goldEndColor: document.getElementById('goldEndColor').value,
+                    bannerTextColor: document.getElementById('bannerTextColor').value,
+                    hfTextColor: document.getElementById('hfTextColor').value,
+                    fontFamily: document.getElementById('fontFamily').value,
+                    previewZoom: document.getElementById('previewZoom').value,
+                    gridCols: FIXED_GRID_COLS,
+                    sizeBanner: document.getElementById('sizeBanner').value,
+                    sizeHF: document.getElementById('sizeHF').value,
+                    sizePrice: document.getElementById('sizePrice').value,
+                    sizeOldPrice: document.getElementById('sizeOldPrice').value,
+                    sizeEn: document.getElementById('sizeEn').value,
+                    sizeAr: document.getElementById('sizeAr').value,
+                    sizeWeight: document.getElementById('sizeWeight').value,
+                    sizeBadge: document.getElementById('sizeBadge').value,
+                    cardHeight: document.getElementById('cardHeight').value,
+                    cardRadius: document.getElementById('cardRadius').value,
+                    gapX: document.getElementById('gapX').value,
+                    gapY: document.getElementById('gapY').value,
+                    pagePadding: document.getElementById('pagePadding').value,
+                    waveHeight: document.getElementById('waveHeight').value,
+                    weightWidth: document.getElementById('weightWidth').value,
+                    weightHeight: document.getElementById('weightHeight').value,
+                    pricePanelWidth: document.getElementById('pricePanelWidth').value,
+                    pricePanelHeight: document.getElementById('pricePanelHeight').value,
+                    pricePanelTop: document.getElementById('pricePanelTop').value,
+                    titleBottom: document.getElementById('titleBottom').value,
+                    bannerText: document.getElementById('bannerText').value,
+                    bannerSubText: document.getElementById('bannerSubText').value,
+                    validUntil: document.getElementById('validUntil').value,
+                    validUntilLabel: document.getElementById('validUntilLabel').value,
+                    headerText: document.getElementById('headerText').value,
+                    headerRightText: document.getElementById('headerRightText').value,
+                    footerText: document.getElementById('footerText').value,
+                    bannerHeight: document.getElementById('bannerHeight').value,
+                    headerHeight: document.getElementById('headerHeight').value,
+                    footerHeight: document.getElementById('footerHeight').value
+                },
+                flyerItems,
+                bannerImage,
+                autosaveEnabled
+            };
+        }
+
+        function applyState(state) {
+            if (!state) return;
+
+            Object.entries(state.form || {}).forEach(([key, val]) => {
+                const node = document.getElementById(key);
+                if (node && val !== undefined && val !== null) {
+                    node.value = key === 'gridCols' ? FIXED_GRID_COLS : val;
+                }
+            });
+
+            flyerItems = Array.isArray(state.flyerItems) ? state.flyerItems : [];
+            bannerImage = state.bannerImage || '';
+            autosaveEnabled = state.autosaveEnabled !== false;
+            document.getElementById('autosaveToggle').dataset.on = String(autosaveEnabled);
+            document.getElementById('storageStat').innerText = autosaveEnabled ? 'Autosave On' : 'Autosave Off';
+
+            updateAddedItemsUI();
+            updateDesign();
+        }
+
+        function saveStudioState(showAlert = false) {
+            if (!autosaveEnabled && !showAlert) return;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(getStudioState()));
+            if (showAlert) alert('Studio state saved locally.');
+        }
+
+        function restoreStudioState() {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return;
+            try {
+                applyState(JSON.parse(raw));
+            } catch (error) {
+                console.warn('Unable to restore studio state', error);
+            }
+        }
+
+        function toggleAutosave() {
+            autosaveEnabled = !autosaveEnabled;
+            document.getElementById('autosaveToggle').dataset.on = String(autosaveEnabled);
+            document.getElementById('storageStat').innerText = autosaveEnabled ? 'Autosave On' : 'Autosave Off';
+            if (autosaveEnabled) saveStudioState();
+        }
+
+        function exportStudioJSON() {
+            const blob = new Blob([JSON.stringify(getStudioState(), null, 2)], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `growgreen-studio-${Date.now()}.json`;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
+
+        function importStudioJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    applyState(imported);
+                    saveStudioState();
+                    alert('Studio JSON imported successfully.');
+                } catch (error) {
+                    alert('Invalid JSON file.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function applyPreset(name) {
+            const presets = {
+                classic: {
+                    themeColor: '#1e8f62',
+                    themeDarkColor: '#0d2d59',
+                    priceColor: '#d90511',
+                    cardTextColor: '#132f69',
+                    goldStartColor: '#f3d07a',
+                    goldEndColor: '#b47a12',
+                    previewZoom: 78,
+                    gridCols: 3,
+                    sizePrice: 60,
+                    sizeEn: 14,
+                    sizeAr: 18,
+                    cardHeight: 320,
+                    cardRadius: 28,
+                    weightWidth: 118,
+                    weightHeight: 72,
+                    pricePanelWidth: 48,
+                    pricePanelHeight: 112,
+                    pricePanelTop: 82,
+                    titleBottom: 70,
+                    waveHeight: 66
+                },
+                reference: {
+                    themeColor: '#173d84',
+                    themeDarkColor: '#0b2a63',
+                    priceColor: '#d90712',
+                    cardTextColor: '#12316f',
+                    goldStartColor: '#efc763',
+                    goldEndColor: '#b17b14',
+                    previewZoom: 78,
+                    gridCols: 3,
+                    sizePrice: 64,
+                    sizeEn: 15,
+                    sizeAr: 20,
+                    cardHeight: 328,
+                    cardRadius: 30,
+                    weightWidth: 128,
+                    weightHeight: 76,
+                    pricePanelWidth: 48,
+                    pricePanelHeight: 118,
+                    pricePanelTop: 84,
+                    titleBottom: 74,
+                    waveHeight: 72
+                }
+            };
+
+            const preset = presets[name];
+            if (!preset) return;
+
+            Object.entries(preset).forEach(([id, val]) => {
+                const node = document.getElementById(id);
+                if (node) node.value = id === 'gridCols' ? FIXED_GRID_COLS : val;
+            });
+
+            updateDesign();
+            saveStudioState();
+        }
+
+        function loadReferencePreset() {
+            document.getElementById('offerLabel').value = '10 KG';
+            document.getElementById('badgeText').value = 'KEES';
+            document.getElementById('oldPrice').value = '48.00';
+            document.getElementById('offerPrice').value = '45.00';
+            if (!document.getElementById('manualNameEn').value) document.getElementById('manualNameEn').value = 'EXTRA WHITE';
+            if (!document.getElementById('manualNameAr').value) document.getElementById('manualNameAr').value = 'اكسترا وايت';
+            document.getElementById('selVolume').innerHTML = '<option value="10 KG">10 KG</option>';
+            document.getElementById('selVolume').value = '10 KG';
+            applyPreset('reference');
+        }
+
+        function resetStudio() {
+            if (!confirm('Reset the whole studio and clear all flyer items?')) return;
+            localStorage.removeItem(STORAGE_KEY);
+            flyerItems = [];
+            bannerImage = '';
+            tempItemImage = '';
+            selectedEditIndex = null;
+            window.location.reload();
+        }
+
+        function generatePDF() {
+            if (!flyerItems.length && !bannerImage) {
+                alert('Please add a banner or at least one product item.');
+                return;
+            }
+
+            const element = document.getElementById('pdf-capture-area');
+            const opt = {
+                margin: 0,
+                filename: `GrowGreen_Offers_${Date.now()}.pdf`,
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['css', 'legacy'] }
+            };
+
+            const btn = document.querySelector('button[onclick="generatePDF()"]');
+            const original = btn.innerHTML;
+            btn.innerHTML = 'Generating PDF...';
+
+            const oldZoom = document.documentElement.style.getPropertyValue('--preview-zoom');
+            document.documentElement.style.setProperty('--preview-zoom', '1');
+            element.querySelectorAll('.page-shell').forEach((shell) => {
+                shell.style.width = '210mm';
+                shell.style.height = '297mm';
+                shell.style.marginBottom = '0';
+            });
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                btn.innerHTML = original;
+                document.documentElement.style.setProperty('--preview-zoom', oldZoom || `${document.getElementById('previewZoom').value / 100}`);
+                element.querySelectorAll('.page-shell').forEach((shell) => {
+                    shell.style.width = '';
+                    shell.style.height = '';
+                    shell.style.marginBottom = '';
+                });
+            }).catch(() => {
+                btn.innerHTML = original;
+                document.documentElement.style.setProperty('--preview-zoom', oldZoom || `${document.getElementById('previewZoom').value / 100}`);
+            });
+        }
+
+        function downloadPNG() {
+            if (!flyerItems.length && !bannerImage) {
+                alert('Please add content before exporting.');
+                return;
+            }
+
+            const firstPage = document.querySelector('.a4-page');
+            if (!firstPage) return;
+
+            const btn = document.querySelector('button[onclick="downloadPNG()"]');
+            const original = btn.innerHTML;
+            btn.innerHTML = 'Exporting...';
+
+            const oldZoom = document.documentElement.style.getPropertyValue('--preview-zoom');
+            document.documentElement.style.setProperty('--preview-zoom', '1');
+            html2canvas(firstPage, { scale: 2, useCORS: true, backgroundColor: '#ffffff' })
+                .then((canvas) => {
+                    const link = document.createElement('a');
+                    link.href = canvas.toDataURL('image/png');
+                    link.download = `GrowGreen_Page1_${Date.now()}.png`;
+                    link.click();
+                })
+                .finally(() => {
+                    btn.innerHTML = original;
+                    document.documentElement.style.setProperty('--preview-zoom', oldZoom || `${document.getElementById('previewZoom').value / 100}`);
+                });
+        }
+
+        updateAddedItemsUI();
+        prepareManualForm();
+        restoreStudioState();
+        updateDesign();
+    </script>
+</body>
+</html>
